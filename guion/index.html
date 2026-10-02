@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guion de sustentación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app" id="app">
+  <header class="topbar">
+    <div class="brand"><b>Guion</b> · Sustentación 10 min</div>
+    <nav class="tabs" id="tabs"></nav>
+    <button class="toggle" id="toggle-guion" title="Mostrar u ocultar el guion (G)">Ocultar guion</button>
+  </header>
+
+  <div class="body">
+    <main class="stage" id="stage"><div class="cargando">Cargando los datos del proyecto…</div></main>
+
+    <aside class="guion" id="guion">
+      <div class="g-head">
+        <div class="g-clock">
+          <span class="t" id="g-time">0:00</span>
+          <span class="meta" id="g-meta">Meta 9:00 · límite 10:00<br>T inicia o pausa el reloj</span>
+        </div>
+        <div class="g-bar" id="g-bar"></div>
+        <p class="g-kicker" id="g-kicker"></p>
+        <h2 class="g-title" id="g-title"></h2>
+        <div class="g-scene-clock" id="g-scene-clock"></div>
+      </div>
+      <div class="g-content" id="g-content"></div>
+      <div class="g-foot">
+        <button id="g-prev" title="Escena anterior (←)">←</button>
+        <button id="g-play" title="Iniciar o pausar el reloj (T)">Iniciar</button>
+        <button class="primary" id="g-next" title="Escena siguiente (→ o espacio)">Siguiente →</button>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="tip" id="tip"></div>
+
+<script src="guion.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

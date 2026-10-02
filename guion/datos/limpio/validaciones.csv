@@ -1,0 +1,10 @@
+﻿validacion,resultado,detalle
+Hay liquidaciones cargadas,OK,134 filas
+Hay items cargados,OK,4448 filas
+Consecutivos unicos,OK,
+Todo item referencia una liquidacion,OK,0 huerfanos
+Estados dentro del catalogo,OK,
+Tipos de servicio dentro del catalogo,OK,
+Cabecera cuadra con el detalle,AVISO,1 liquidaciones con desvio mayor al 1%
+Fechas de servicio coherentes,OK,0 invertidas
+Indicadores calculados,OK,48 filas
