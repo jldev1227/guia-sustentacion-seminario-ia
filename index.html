@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Liquidaciones a Insights</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -508,6 +513,87 @@
     margin-bottom: 14px;
   }
 
+
+  /* Tablero: flujo, código y tablas */
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 26px 0;
+    counter-reset: paso;
+  }
+
+  .flow div { background: var(--panel); padding: 14px 14px 16px; }
+  .flow div.here { background: var(--accent-soft); }
+
+  .flow b {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 6px;
+  }
+
+  .flow div.here b { color: var(--accent-ink); }
+  .flow span { display: block; font-weight: 600; color: var(--ink-strong); font-size: var(--step--1); line-height: 1.35; }
+  .flow small { display: block; font-size: 0.75rem; color: var(--muted); margin-top: 4px; line-height: 1.45; }
+
+  pre.code {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.6;
+    background: var(--panel-alt);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin: 12px 0 18px;
+    overflow-x: auto;
+    color: var(--ink);
+    max-width: 100%;
+  }
+
+  pre.code .c { color: var(--faint); }
+
+  .tbl-wrap { overflow-x: auto; margin: 14px 0 22px; }
+
+  table.tbl {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: var(--step--1);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tbl th {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 500;
+    text-align: left;
+    padding: 0 14px 8px 0;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .tbl td { padding: 9px 14px 9px 0; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink); }
+  .tbl td.muted { color: var(--muted); }
+  .tbl code, .panel code, p code { font-family: var(--mono); font-size: 0.85em; color: var(--accent-ink); }
+
+  .panel ul { margin: 0; padding-left: 18px; font-size: var(--step--1); color: var(--muted); }
+  .panel ul li { margin-bottom: 5px; }
+  .panel p { font-size: var(--step--1); color: var(--muted); margin-bottom: 10px; }
+  .panel p:last-child { margin-bottom: 0; }
+
+  @media (max-width: 880px) {
+    .flow { grid-template-columns: minmax(0, 1fr); }
+  }
+
   a { color: var(--accent-ink); }
 
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
@@ -555,6 +641,8 @@
     body { background: #fff; color: #000; }
   }
 </style>
+</head>
+<body>
 
 <div class="shell">
 
@@ -567,6 +655,7 @@
       <a href="#alcance">Alcance congelado</a>
       <a href="#balance">Pros y contras</a>
       <a href="#cuidados">A tener en cuenta</a>
+      <a href="#tablero">El tablero en Power BI</a>
       <a href="#conceptos">Conceptos a dominar</a>
       <a href="#preguntas">Preguntas probables</a>
       <a href="#ruta">Ruta de trabajo</a>
@@ -937,6 +1026,175 @@
     </section>
 
     <!-- ─────────────────────────────────────────────────── -->
+    <section id="tablero">
+      <p class="sec-label">Entregable 6 · 20% de la nota técnica</p>
+      <h2>El tablero en Power BI</h2>
+      <p>
+        El tablero es la última capa de un flujo de cinco pasos. Hay que poder contar ese flujo de
+        memoria, porque la pregunta más común del jurado es <strong>«¿de dónde sale este
+        número?»</strong>, y la respuesta es recorrerlo de atrás hacia adelante.
+      </p>
+
+      <div class="flow">
+        <div><b>1 · Origen</b><span>Datos crudos</span><small>CSV sucios en <code>00_DATOS/raw</code>: placas mal escritas, tarifas como texto, duplicados.</small></div>
+        <div><b>2 · Limpieza</b><span>Pipeline en Python</span><small><code>04_PIPELINE.py</code> limpia, valida (9 controles) y marca atípicos.</small></div>
+        <div><b>3 · Conexión</b><span>Power Query</span><small>Lee los CSV limpios, asigna tipos y deja la ruta como parámetro.</small></div>
+        <div class="here"><b>4 · Modelo</b><span>Relaciones y DAX</span><small>Cuatro tablas de hechos, un calendario y las medidas de los 12 indicadores.</small></div>
+        <div class="here"><b>5 · Presentación</b><span>Tres páginas</span><small>Visión ejecutiva, detalle operacional, tiempos y comparativos.</small></div>
+      </div>
+
+      <h3>Qué hace Power Query, y qué no hace</h3>
+      <p>
+        Power Query es el editor de Power BI para traer y preparar datos antes de que lleguen al
+        modelo. Cada acción que se hace ahí queda registrada como un <em class="term">paso aplicado</em>,
+        en un lenguaje llamado <em class="term">M</em>, y se repite sola cada vez que se pulsa
+        <strong>Actualizar</strong>. En este proyecto se le deja a propósito un papel
+        <strong>pequeño</strong>:
+      </p>
+
+      <div class="split">
+        <div class="panel">
+          <h4>Lo que sí hace</h4>
+          <ul>
+            <li>Conectar a los cuatro CSV limpios: liquidaciones, ítems, tiempos e indicadores mensuales.</li>
+            <li>Leer el archivo como <strong>UTF-8</strong>, para que las tildes no se rompan.</li>
+            <li>Asignar tipos: fechas como fecha, valores como número decimal, banderas como verdadero/falso.</li>
+            <li>Tomar la carpeta de origen de un <strong>parámetro</strong> (<code>RutaDatos</code>), no de una ruta fija.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h4>Lo que no hace, y por qué</h4>
+          <p>La limpieza pesada —quitar duplicados, corregir placas, convertir <code>$452.000</code> en número, descartar huérfanos— ocurre <strong>antes</strong>, en Python.</p>
+          <p>Así la limpieza queda en un archivo que se puede leer, versionar y volver a ejecutar, con una bitácora de cada registro descartado. El tablero solo muestra datos que ya pasaron las validaciones.</p>
+        </div>
+      </div>
+
+      <p class="tight">La primera línea de cada consulta queda así, y es lo único que hay que tocar si los datos cambian de carpeta:</p>
+      <pre class="code">Origen = Csv.Document(
+    File.Contents(RutaDatos &amp; "\liquidaciones.csv"),
+    [Delimiter = ",", Encoding = 65001]   <span class="c">// 65001 = UTF-8</span>
+)</pre>
+      <p class="muted">
+        El parámetro existe porque Power BI guarda dentro del <code>.pbix</code> la ruta absoluta de
+        donde leyó los datos. Si el evaluador abre el archivo en otro computador, la ruta no existe.
+        Con el parámetro, se cambia un solo valor y las cuatro consultas vuelven a funcionar.
+      </p>
+
+      <h3>El modelo: cómo se conectan las tablas</h3>
+      <p>
+        Las tablas no se mezclan en una sola: se relacionan por una columna en común. La
+        <strong>liquidación</strong> es la cabecera (una por cliente y mes) y de ella cuelgan sus
+        <strong>ítems</strong> (cada servicio prestado) y sus <strong>tiempos</strong> (cada cambio de
+        estado). Un calendario propio ordena todo en el tiempo.
+      </p>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Tabla</th><th>Filas</th><th>Qué es una fila</th><th>Se une por</th></tr></thead>
+          <tbody>
+            <tr><td><code>Liquidaciones</code></td><td>134</td><td class="muted">Una liquidación mensual para un cliente</td><td class="muted">Es la tabla central</td></tr>
+            <tr><td><code>Items</code></td><td>4.448</td><td class="muted">Un servicio prestado: placa, recorrido, tarifa, valor</td><td class="muted"><code>consecutivo</code> → Liquidaciones</td></tr>
+            <tr><td><code>Tiempos</code></td><td>428</td><td class="muted">Un cambio de estado, con los días que tardó</td><td class="muted"><code>consecutivo</code> → Liquidaciones</td></tr>
+            <tr><td><code>KPIs</code></td><td>48</td><td class="muted">Un mes de una operadora, ya agregado</td><td class="muted"><code>periodo</code> → Calendario</td></tr>
+            <tr><td><code>Calendario</code></td><td>730</td><td class="muted">Un día, con año, mes y trimestre</td><td class="muted"><code>Date</code> → Liquidaciones y KPIs</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">
+        Todas las relaciones son de <strong>uno a varios</strong> y filtran en una sola dirección: al
+        elegir una liquidación se filtran sus ítems, nunca al revés. Es la forma más simple de evitar
+        cifras dobles.
+      </p>
+
+      <h3>Las medidas: dónde viven los 12 indicadores</h3>
+      <p>
+        Cada indicador del entregable 3 es una <em class="term">medida</em> escrita en
+        <em class="term">DAX</em>, el lenguaje de fórmulas de Power BI. Una medida no guarda un
+        resultado: lo <strong>recalcula según lo que esté filtrado</strong>. Por eso la misma medida da
+        el total de 24 meses en la portada y el valor de un solo mes cuando se elige un mes. Basta con
+        saber explicar tres:
+      </p>
+      <pre class="code"><span class="c">-- K01 · suma el total, pero sin contar las anuladas</span>
+Valor liquidado =
+CALCULATE(SUM(Liquidaciones[total]), Liquidaciones[es_anulada] = FALSE)
+
+<span class="c">-- K05 · el cuello de botella: días promedio en la etapa de aprobación</span>
+Dias en aprobacion =
+CALCULATE(AVERAGE(Tiempos[dias_en_etapa]),
+          Tiempos[transicion] = "LIQUIDADA -&gt; APROBADA")
+
+<span class="c">-- K12 · DIVIDE evita el error de dividir por cero en meses sin datos</span>
+Pct terceros =
+DIVIDE(CALCULATE(SUM(Items[valor_final]), Items[es_tercero] = TRUE),
+       SUM(Items[valor_final])) * 100</pre>
+      <p class="muted">
+        <code>CALCULATE</code> es la función clave: toma un cálculo (una suma, un promedio) y le añade
+        una condición. Leerla en voz alta es suficiente: «suma el total, pero solo de las que no están
+        anuladas».
+      </p>
+
+      <h3>Las tres páginas, visual por visual</h3>
+      <p>
+        Cada visual responde a una de las seis preguntas de negocio. Si no responde ninguna, no está.
+        El número entre paréntesis es la pregunta que contesta.
+      </p>
+      <div class="split">
+        <div class="panel">
+          <h4>1 · Visión ejecutiva</h4>
+          <ul>
+            <li>Cinco tarjetas: liquidado, facturado, ticket promedio, días a factura, tasa de anulación (01, 02, 05).</li>
+            <li>Línea de evolución mensual, liquidado frente a facturado (01).</li>
+            <li>Columnas 100% con la composición del ingreso (03).</li>
+            <li>Valor por operadora y liquidaciones por estado (01, 02).</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h4>2 · Detalle operacional</h4>
+          <ul>
+            <li>Los 15 vehículos que más facturan y el ingreso por recorrido (04).</li>
+            <li>Valor por tipo de tarifa (03).</li>
+            <li>Flota propia frente a terceros, mes a mes (06).</li>
+            <li>Tabla de los <strong>122 ítems atípicos</strong>, con el motivo de cada uno.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h4>3 · Tiempos y comparativos</h4>
+          <ul>
+            <li>Días por etapa, con <strong>Liquidada → Aprobada resaltada en ocre</strong>: es el cuello de botella (02).</li>
+            <li>Ciclo completo mes a mes contra una línea de referencia de 15 días (02).</li>
+            <li>Anulaciones por motivo (05).</li>
+            <li>Comparativo del mismo mes, año contra año (01).</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Lo que lo hace interactivo</h3>
+      <dl class="concepts">
+        <div><dt>Filtros sincronizados</dt><dd>El período y la operadora se eligen una vez y aplican en las tres páginas. Es el «filtro global» que pide el marco.</dd></div>
+        <div><dt>Obtener detalles</dt><dd>Desde la evolución mensual de la página 1, clic derecho lleva a la página 2 ya filtrada en ese mes. Es la capacidad de profundizar.</dd></div>
+        <div><dt>Información al pasar el cursor</dt><dd>Muestra el valor exacto de cada barra sin llenar el gráfico de etiquetas.</dd></div>
+        <div><dt>Interacciones editadas</dt><dd>La tabla de atípicos no filtra el resto de la página 2; si lo hiciera, seleccionar una fila dejaría vacíos los otros gráficos.</dd></div>
+      </dl>
+
+      <h3>Cifras de control</h3>
+      <p>
+        Si el tablero está bien armado, sin filtros debe mostrar exactamente lo que calculó el
+        pipeline. Conviene sabérselas: son la prueba de que tablero y datos cuadran.
+      </p>
+      <div class="specs">
+        <div><span class="fig">$3.604 M</span><span class="cap">Valor liquidado</span></div>
+        <div><span class="fig">$27,8 M</span><span class="cap">Ticket promedio</span></div>
+        <div><span class="fig">18,0</span><span class="cap">Días a factura</span></div>
+        <div><span class="fig">10,8</span><span class="cap">Días en aprobación</span></div>
+        <div><span class="fig">134</span><span class="cap">Liquidaciones</span></div>
+        <div><span class="fig">122</span><span class="cap">Ítems atípicos</span></div>
+      </div>
+      <p class="muted">
+        Si alguna no coincide, casi siempre es una de dos cosas: una medida que olvidó excluir las
+        anuladas, o una relación del modelo orientada al revés.
+      </p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
     <section id="conceptos">
       <p class="sec-label">La guía a sustentar</p>
       <h2>Conceptos a dominar</h2>
@@ -1022,6 +1280,24 @@
           <div><dt>Huella de los modelos</dt><dd>Entrenar y ejecutar modelos grandes consume energía y tiene un costo ambiental. Es el argumento a favor de usar el modelo más simple que resuelva el problema.</dd></div>
         </dl>
       </div>
+      <div class="cgroup">
+        <header><h3>Power BI</h3><span>Entregable 6</span></header>
+        <dl class="concepts">
+          <div><dt>Power Query</dt><dd>El editor donde se conectan y preparan los datos antes de llegar al modelo. Cada acción queda como un paso que se repite solo al actualizar.</dd></div>
+          <div><dt>Paso aplicado</dt><dd>Cada transformación registrada en Power Query, escrita en lenguaje M. La lista de pasos es la receta reproducible de la consulta.</dd></div>
+          <div><dt>Parámetro</dt><dd>Un valor con nombre que usan varias consultas. Aquí guarda la carpeta de datos, para que el archivo funcione en cualquier computador.</dd></div>
+          <div><dt>Modelo de datos</dt><dd>Las tablas y cómo se relacionan. Permite filtrar los ítems al elegir una liquidación sin unir todo en una tabla gigante.</dd></div>
+          <div><dt>Tabla de hechos y de dimensión</dt><dd>La de hechos registra lo que pasó (liquidaciones, ítems); la de dimensión describe por dónde se mira (el calendario).</dd></div>
+          <div><dt>Relación uno a varios</dt><dd>Una liquidación tiene muchos ítems; cada ítem pertenece a una sola liquidación. Es la relación más común y la más segura.</dd></div>
+          <div><dt>Tabla de calendario</dt><dd>Una tabla con un día por fila que Power BI necesita para filtrar por mes, comparar años y ordenar el tiempo correctamente.</dd></div>
+          <div><dt>Medida y columna calculada</dt><dd>La columna calculada se calcula una vez por fila y se guarda. La medida se calcula en el momento, según los filtros activos. Los indicadores son medidas.</dd></div>
+          <div><dt>Contexto de filtro</dt><dd>Lo que está seleccionado en ese momento: un mes, una operadora. Es lo que hace que una misma medida dé un valor distinto en cada visual.</dd></div>
+          <div><dt>CALCULATE</dt><dd>La función que toma un cálculo y le cambia los filtros: «suma el total, pero solo de las no anuladas».</dd></div>
+          <div><dt>Segmentación</dt><dd>El control visual que actúa como filtro. Sincronizada, aplica a todas las páginas a la vez.</dd></div>
+          <div><dt>Obtener detalles</dt><dd>Saltar de un gráfico resumido a una página de detalle que llega ya filtrada por lo que se hizo clic.</dd></div>
+        </dl>
+      </div>
+
     </section>
 
     <!-- ─────────────────────────────────────────────────── -->
@@ -1069,6 +1345,26 @@
         <article>
           <h3>¿Qué harías distinto si tuvieras más tiempo?</h3>
           <p>Dejar el flujo corriendo de forma automática cada mes, incorporar el costo operativo para pasar de ingresos a márgenes, y añadir una proyección del valor a liquidar del mes siguiente.</p>
+        </article>
+        <article>
+          <h3>¿Por qué limpiaste en Python y no en Power Query?</h3>
+          <p>Porque la limpieza tiene reglas que hay que poder revisar y repetir: nueve validaciones, una bitácora de lo que se descarta y una detección de atípicos. En un script quedan escritas, versionadas y se ejecutan con un comando. Power Query se usa para lo que mejor hace: conectar y asignar tipos. Así cada herramienta hace una sola cosa.</p>
+        </article>
+        <article>
+          <h3>¿Cómo se actualiza el tablero cuando llega un mes nuevo?</h3>
+          <p>Se ejecuta el pipeline, que regenera los CSV limpios, y en Power BI se pulsa Actualizar. Power Query repite sus pasos solo. Si los datos cambian de carpeta, se edita el parámetro <code>RutaDatos</code> y nada más.</p>
+        </article>
+        <article>
+          <h3>¿De dónde sale este número?</h3>
+          <p>Se recorre hacia atrás: la tarjeta muestra una medida DAX, la medida suma una columna de la tabla de liquidaciones, esa tabla viene del CSV limpio, y ese CSV lo produjo el pipeline a partir de los datos crudos, con cada descarte registrado. Y la cifra coincide con la que calcula el pipeline por su cuenta.</p>
+        </article>
+        <article>
+          <h3>¿Por qué una tabla de calendario aparte?</h3>
+          <p>Porque las fechas de las tablas tienen huecos: hay días sin liquidaciones. Un calendario continuo permite filtrar por rango, agrupar por mes y comparar el mismo mes entre años sin que falten períodos.</p>
+        </article>
+        <article>
+          <h3>¿Qué diferencia hay entre una medida y una columna calculada?</h3>
+          <p>La columna calculada se calcula una vez por fila y se guarda en la tabla. La medida se calcula en el momento según lo que esté filtrado. Por eso los indicadores son medidas: el ticket promedio de enero no es la suma de los tickets de cada fila.</p>
         </article>
       </div>
     </section>
@@ -1167,3 +1463,5 @@
     Object.keys(map).forEach(function (id) { obs.observe(document.getElementById(id)); });
   })();
 </script>
+</body>
+</html>
