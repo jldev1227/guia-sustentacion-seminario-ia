@@ -1,0 +1,1169 @@
+<title>Liquidaciones a Insights</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    --ground:      #F8FAF9;
+    --panel:       #FFFFFF;
+    --panel-alt:   #F1F5F3;
+    --ink:         #162927;
+    --ink-strong:  #0E2321;
+    --muted:       #5C716E;
+    --faint:       #869996;
+    --line:        #DCE4E2;
+    --line-strong: #C3CFCC;
+    --accent:      #A85F22;
+    --accent-ink:  #8C4D19;
+    --accent-soft: #F6EADC;
+    --pro:         #2C6A4F;
+    --pro-soft:    #E4F0EA;
+    --contra:      #A3382E;
+    --contra-soft: #F7E6E3;
+    --warn:        #8A6212;
+
+    --display: "Zilla Slab", Georgia, "Times New Roman", serif;
+    --body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --step--1: 0.813rem;
+    --step-0:  0.975rem;
+    --step-1:  1.15rem;
+    --step-2:  1.45rem;
+    --step-3:  1.95rem;
+    --step-4:  2.6rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0C1716;
+      --panel:       #13201E;
+      --panel-alt:   #182825;
+      --ink:         #E7EEEB;
+      --ink-strong:  #F3F8F6;
+      --muted:       #9AADA9;
+      --faint:       #7A8C89;
+      --line:        #24352F;
+      --line-strong: #33473F;
+      --accent:      #DC9852;
+      --accent-ink:  #EBB075;
+      --accent-soft: #271D13;
+      --pro:         #6FBF95;
+      --pro-soft:    #15251D;
+      --contra:      #E08479;
+      --contra-soft: #281916;
+      --warn:        #D3A448;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #0C1716;
+    --panel:       #13201E;
+    --panel-alt:   #182825;
+    --ink:         #E7EEEB;
+    --ink-strong:  #F3F8F6;
+    --muted:       #9AADA9;
+    --faint:       #7A8C89;
+    --line:        #24352F;
+    --line-strong: #33473F;
+    --accent:      #DC9852;
+    --accent-ink:  #EBB075;
+    --accent-soft: #271D13;
+    --pro:         #6FBF95;
+    --pro-soft:    #15251D;
+    --contra:      #E08479;
+    --contra-soft: #281916;
+    --warn:        #D3A448;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: var(--step-0);
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .shell {
+    display: grid;
+    grid-template-columns: 232px minmax(0, 1fr);
+    gap: 56px;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 40px 120px;
+    align-items: start;
+  }
+
+  /* ─── Navegación ─────────────────────────────────────────── */
+
+  .nav {
+    position: sticky;
+    top: 0;
+    padding: 56px 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .nav-brand {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+    line-height: 1.5;
+  }
+
+  .nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border-left: 1px solid var(--line);
+  }
+
+  .nav-list a {
+    font-size: var(--step--1);
+    color: var(--muted);
+    text-decoration: none;
+    padding: 5px 0 5px 16px;
+    margin-left: -1px;
+    border-left: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .nav-list a:hover { color: var(--ink); }
+
+  .nav-list a.current {
+    color: var(--ink-strong);
+    font-weight: 600;
+    border-left-color: var(--accent);
+  }
+
+  .nav-rule {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    line-height: 1.55;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border-radius: 3px;
+    padding: 12px 14px;
+  }
+
+  /* ─── Cabecera tipo liquidación ──────────────────────────── */
+
+  .main { padding-top: 56px; min-width: 0; }
+
+  .masthead { margin-bottom: 72px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 18px;
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: var(--step-4);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--ink-strong);
+    text-wrap: balance;
+    margin: 0 0 18px;
+    max-width: 16ch;
+  }
+
+  .lede {
+    font-size: var(--step-1);
+    line-height: 1.55;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 0 0 36px;
+  }
+
+  .docblock {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--panel);
+    overflow: hidden;
+  }
+
+  .docblock div {
+    padding: 13px 16px;
+    border-right: 1px solid var(--line);
+  }
+
+  .docblock div:last-child { border-right: none; }
+
+  .docblock dt {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 5px;
+  }
+
+  .docblock dd {
+    margin: 0;
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--ink-strong);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ─── Secciones ──────────────────────────────────────────── */
+
+  section { scroll-margin-top: 28px; margin-bottom: 76px; }
+
+  .sec-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--faint);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    margin: 0 0 22px;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: var(--step-3);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    color: var(--ink-strong);
+    text-wrap: balance;
+    margin: 0 0 14px;
+  }
+
+  h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    color: var(--ink-strong);
+    margin: 36px 0 12px;
+  }
+
+  p { max-width: 68ch; margin: 0 0 16px; }
+  p.tight { margin-bottom: 10px; }
+  .muted { color: var(--muted); }
+
+  strong { font-weight: 600; color: var(--ink-strong); }
+
+  em.term {
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: 0.87em;
+    color: var(--accent-ink);
+  }
+
+  /* ─── Piezas reutilizables ───────────────────────────────── */
+
+  .split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+    margin: 26px 0;
+  }
+
+  .stack { display: flex; flex-direction: column; gap: 14px; }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 20px 22px;
+  }
+
+  .panel h4 {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 12px;
+    font-weight: 500;
+  }
+
+  .panel p { margin: 0; font-size: var(--step--1); }
+
+  /* Lista de preguntas de negocio */
+  .qlist { list-style: none; margin: 22px 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+
+  .qlist li {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+
+  .qlist li:first-child { border-top: 1px solid var(--line); }
+
+  .qlist .n {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .qlist .q { max-width: 62ch; }
+
+  /* Tira de alcance congelado */
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 26px 0;
+  }
+
+  .specs div { background: var(--panel); padding: 16px 14px; text-align: center; }
+
+  .specs .fig {
+    font-family: var(--display);
+    font-size: var(--step-2);
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+    display: block;
+  }
+
+  .specs .cap {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* Pros y contras */
+  .balance { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-top: 26px; }
+
+  .bcol h3 { margin-top: 0; display: flex; align-items: center; gap: 9px; }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  .tag.up { background: var(--pro-soft); color: var(--pro); }
+  .tag.down { background: var(--contra-soft); color: var(--contra); }
+
+  .bitem { border-left: 2px solid var(--line-strong); padding: 0 0 0 16px; margin-bottom: 20px; }
+  .bcol.up .bitem { border-left-color: var(--pro); }
+  .bcol.down .bitem { border-left-color: var(--contra); }
+
+  .bitem b { display: block; font-weight: 600; color: var(--ink-strong); margin-bottom: 3px; }
+  .bitem p { font-size: var(--step--1); color: var(--muted); margin: 0; max-width: 54ch; }
+
+  .fix {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--accent-ink);
+    margin-top: 7px;
+    max-width: 54ch;
+  }
+
+  /* Reglas de alcance */
+  .rules { list-style: none; margin: 24px 0 0; padding: 0; }
+
+  .rules li {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .rules li:first-child { border-top: 1px solid var(--line); }
+  .rules .mark { color: var(--accent); font-family: var(--mono); font-size: 0.85rem; line-height: 1.7; }
+  .rules b { display: block; color: var(--ink-strong); font-weight: 600; }
+  .rules p { margin: 2px 0 0; font-size: var(--step--1); color: var(--muted); max-width: 60ch; }
+
+  /* Conceptos */
+  .cgroup { margin-bottom: 34px; }
+
+  .cgroup > header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+  }
+
+  .cgroup > header h3 { margin: 0; font-size: var(--step-1); }
+
+  .cgroup > header span {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+
+  .concepts { margin: 0; }
+
+  .concepts div {
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: minmax(150px, 210px) minmax(0, 1fr);
+    gap: 20px;
+    align-items: baseline;
+  }
+
+  .concepts dt { font-weight: 600; color: var(--ink-strong); font-size: var(--step--1); }
+  .concepts dd { margin: 0; font-size: var(--step--1); color: var(--muted); max-width: 62ch; }
+
+  /* Preguntas del jurado */
+  .qa { border-top: 1px solid var(--line); margin-top: 24px; }
+
+  .qa article { padding: 20px 0; border-bottom: 1px solid var(--line); }
+
+  .qa h3 {
+    margin: 0 0 8px;
+    font-size: var(--step-1);
+    font-weight: 500;
+    color: var(--ink-strong);
+    max-width: 60ch;
+  }
+
+  .qa p { font-size: var(--step--1); color: var(--muted); margin: 0; max-width: 66ch; }
+  .qa p + p { margin-top: 8px; }
+
+  /* Ruta */
+  .route { margin: 26px 0 0; }
+
+  .route .leg {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 22px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .route .leg:first-child { border-top: 1px solid var(--line); }
+
+  .route .when {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--faint);
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .route .when b { display: block; color: var(--accent); font-weight: 500; }
+  .route .what b { display: block; color: var(--ink-strong); font-weight: 600; margin-bottom: 3px; }
+  .route .what p { margin: 0; font-size: var(--step--1); color: var(--muted); max-width: 58ch; }
+
+  .route .leg.final .when b { color: var(--contra); }
+
+  /* Cierre */
+  .closing {
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 32px 34px;
+    background: var(--panel);
+  }
+
+  .closing p:last-child { margin-bottom: 0; }
+
+  .closing .big {
+    font-family: var(--display);
+    font-size: var(--step-2);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ink-strong);
+    max-width: 30ch;
+    text-wrap: balance;
+    margin-bottom: 14px;
+  }
+
+  a { color: var(--accent-ink); }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  @media (max-width: 880px) {
+    .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 22px 80px; }
+    .nav {
+      padding: 20px 0 16px;
+      background: var(--ground);
+      border-bottom: 1px solid var(--line);
+      z-index: 10;
+      gap: 12px;
+    }
+    .nav-brand, .nav-rule { display: none; }
+    .nav-list {
+      flex-direction: row;
+      overflow-x: auto;
+      border-left: none;
+      gap: 6px;
+      padding-bottom: 2px;
+      scrollbar-width: thin;
+    }
+    .nav-list a {
+      padding: 5px 11px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      white-space: nowrap;
+      margin-left: 0;
+    }
+    .nav-list a.current { border-color: var(--accent); border-left-color: var(--accent); }
+    .main { padding-top: 34px; }
+    .masthead { margin-bottom: 52px; }
+    .concepts div { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+    .route .leg { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  @media print {
+    .nav { display: none; }
+    .shell { grid-template-columns: 1fr; padding: 0; max-width: none; }
+    section { break-inside: avoid; margin-bottom: 34px; }
+    body { background: #fff; color: #000; }
+  }
+</style>
+
+<div class="shell">
+
+  <nav class="nav">
+    <p class="nav-brand">Opción de grado<br>Seminario IA 2026-2</p>
+    <div class="nav-list">
+      <a href="#panorama">Qué se espera</a>
+      <a href="#tematica">La temática</a>
+      <a href="#enfoque">El enfoque</a>
+      <a href="#alcance">Alcance congelado</a>
+      <a href="#balance">Pros y contras</a>
+      <a href="#cuidados">A tener en cuenta</a>
+      <a href="#conceptos">Conceptos a dominar</a>
+      <a href="#preguntas">Preguntas probables</a>
+      <a href="#ruta">Ruta de trabajo</a>
+    </div>
+    <p class="nav-rule">Regla del proyecto:<br>sobresaliente por completo,<br>no por complejo.</p>
+  </nav>
+
+  <main class="main">
+
+    <header class="masthead">
+      <p class="eyebrow">Plan de trabajo y guía de sustentación</p>
+      <h1>De liquidaciones a decisiones visibles</h1>
+      <p class="lede">
+        Un tablero de control sobre la liquidación de servicios de transporte especial de personal.
+        Caso propio, alcance cerrado, datos sintéticos declarados. Esta página es lo que se sustenta.
+      </p>
+      <dl class="docblock">
+        <div><dt>Período</dt><dd>2026-2</dd></div>
+        <div><dt>Ventana</dt><dd>16 – 27 OCT</dd></div>
+        <div><dt>Entrega meta</dt><dd>22 OCT</dd></div>
+        <div><dt>Modalidad</dt><dd>Individual</dd></div>
+        <div><dt>Estado</dt><dd>Planificación</dd></div>
+      </dl>
+    </header>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="panorama">
+      <p class="sec-label">Alcance de la evaluación</p>
+      <h2>Qué se espera</h2>
+      <p>
+        La opción de grado se cierra con <strong>dos entregas independientes</strong> que suben a la
+        plataforma en la misma ventana. No hay prórroga: la propia guía advierte que los plazos no se
+        modifican.
+      </p>
+
+      <div class="split">
+        <div class="panel">
+          <h4>Entregable académico · 50%</h4>
+          <p>
+            Un ensayo de <strong>cuatro páginas</strong> con normas APA, en PDF. Debe sustentar lo
+            aprendido y aplicarlo a un escenario concreto de industria o empresa. Es individual y pesa
+            la mitad de toda la opción de grado.
+          </p>
+        </div>
+        <div class="panel">
+          <h4>Entregable técnico</h4>
+          <p>
+            Un proyecto de principio a fin que va de los datos crudos a un tablero profesional, en
+            <strong>siete piezas</strong>: requisitos, exploración, indicadores, automatización,
+            diseño, tablero y documentación.
+          </p>
+        </div>
+      </div>
+
+      <p>
+        Lo que el marco pide no es un ejercicio de clase, sino algo que un negocio real pueda usar:
+        que responda preguntas concretas, que se apoye en datos verificados, que se actualice solo y
+        que alguien más pueda mantener cuando uno no esté.
+      </p>
+      <p>
+        El peso está repartido de forma desigual, y eso orienta el esfuerzo: <strong>la automatización
+        y el tablero valen el 40% entre los dos</strong>, y son las dos únicas piezas marcadas como de
+        complejidad alta. Exploración e indicadores suman otro 30%. Las tres restantes —requisitos,
+        diseño y documentación— son las más rápidas de dejar bien.
+      </p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="tematica">
+      <p class="sec-label">Decisión tomada</p>
+      <h2>Qué temática se usará</h2>
+      <p>
+        El caso es la <strong>liquidación de servicios de transporte especial de personal</strong>
+        para operadoras del sector de hidrocarburos: el proceso por el cual una empresa de transporte
+        traduce los servicios prestados durante un mes —viajes, recorridos, horas, kilómetros,
+        pernoctes y recargos— en una liquidación que se aprueba y se factura al cliente.
+      </p>
+      <p>
+        Es un caso propio. Conozco el proceso por dentro, y esa es exactamente la ventaja que hace que
+        la sustentación sea fluida en lugar de recitada.
+      </p>
+
+      <h3>Las dos entregas comparten escenario</h3>
+      <p>
+        El ensayo se escribe sobre el mismo caso, de modo que una sola investigación alimenta ambas
+        entregas y la sustentación queda coherente de principio a fin.
+      </p>
+
+      <div class="split">
+        <div class="panel">
+          <h4>Tablero</h4>
+          <p>
+            Tablero de liquidación y facturación de servicios de transporte especial. Combina tres de
+            los dominios que el marco acepta: financiero, operaciones y logístico.
+          </p>
+        </div>
+        <div class="panel">
+          <h4>Ensayo</h4>
+          <p>
+            Inteligencia artificial y analítica aplicadas a la liquidación de servicios de transporte
+            especial: de los datos operativos a los indicadores de decisión.
+          </p>
+        </div>
+      </div>
+
+      <h3>Los datos serán sintéticos, y se dice de frente</h3>
+      <p>
+        El proceso real involucra nombres de clientes, operadoras petroleras, placas, terceros y
+        tarifas comerciales. Llevar eso a un trabajo académico cruza confidencialidad y protección de
+        datos personales. La decisión es trabajar con un <strong>conjunto sintético calibrado</strong>:
+        la estructura, las reglas de cálculo y las proporciones son las del proceso real; los
+        registros individuales no existen.
+      </p>
+      <p class="muted">
+        Esto no se esconde ni se pide disculpas por ello: se declara en los requisitos, en la
+        documentación y en una lámina de la presentación, enmarcado como lo que es —una decisión de
+        gobernanza, la misma que toma cualquier analista serio que publica un caso.
+      </p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="enfoque">
+      <p class="sec-label">Sobre qué será enfocado</p>
+      <h2>El enfoque</h2>
+      <p>
+        Todo el proyecto cuelga de las preguntas de negocio. El marco es explícito en que no valen las
+        preguntas vagas: nada de «¿cómo va el negocio?». Estas son las seis que el tablero responde, y
+        no se responde ninguna más.
+      </p>
+
+      <ol class="qlist">
+        <li><span class="n">01</span><span class="q">¿Cuánto se liquida y cuánto se factura por operadora y por mes, y cómo evoluciona en el tiempo?</span></li>
+        <li><span class="n">02</span><span class="q">¿Cuánto tarda una liquidación en pasar de elaborada a facturada, y en qué punto del proceso se estanca?</span></li>
+        <li><span class="n">03</span><span class="q">¿De qué se compone el ingreso: servicio base, recargos, transporte adicional y pernoctes?</span></li>
+        <li><span class="n">04</span><span class="q">¿Qué vehículos y qué recorridos concentran la facturación, y cuáles están subutilizados?</span></li>
+        <li><span class="n">05</span><span class="q">¿Cuánto valor se pierde en descuentos y anulaciones, y por qué motivo?</span></li>
+        <li><span class="n">06</span><span class="q">¿Qué participación tienen los terceros frente a la flota propia?</span></li>
+      </ol>
+
+      <h3>Las tres pantallas del tablero</h3>
+      <div class="split">
+        <div class="panel">
+          <h4>Visión ejecutiva</h4>
+          <p>Totales del período, evolución mensual, composición del ingreso y mezcla por operadora. Lo que se mira en treinta segundos.</p>
+        </div>
+        <div class="panel">
+          <h4>Detalle operacional</h4>
+          <p>Facturación por vehículo, recorrido y tipo de tarifa. Recargos y pernoctes. Dónde se concentra y dónde sobra capacidad.</p>
+        </div>
+        <div class="panel">
+          <h4>Tiempos y comparativos</h4>
+          <p>Cuánto tarda cada etapa del proceso de aprobación, dónde está el cuello de botella, anulaciones y comparación entre períodos.</p>
+        </div>
+      </div>
+
+      <h3>El componente de inteligencia artificial</h3>
+      <p>
+        El marco del proyecto no exige un modelo, pero el seminario es de inteligencia artificial y un
+        tablero sin nada de IA deja la sustentación coja. Se incluye <strong>uno solo</strong>, y
+        elegido porque resuelve un problema real del proceso:
+      </p>
+      <p>
+        <strong>Detección de valores anómalos en los ítems de liquidación.</strong> Identificar de
+        forma automática las líneas cuyo valor o cantidad se sale de lo esperado para su tipo de
+        tarifa, antes de que la liquidación se apruebe y se facture. Es control de errores, es
+        explicable, y se defiende sin entrar en terreno resbaladizo.
+      </p>
+      <p class="muted">
+        Un solo componente, bien entendido, sostiene mejor una sustentación que tres modelos a medio
+        explicar.
+      </p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="alcance">
+      <p class="sec-label">Compromiso de alcance</p>
+      <h2>Alcance congelado</h2>
+      <p>
+        Estos números se fijan hoy y no se mueven. Todos caen dentro de lo que el marco exige, en la
+        parte baja o media de cada rango: <strong>cumplir el requisito sin abrir la puerta a que se
+        espere más</strong>.
+      </p>
+
+      <div class="specs">
+        <div><span class="fig">6</span><span class="cap">Preguntas</span></div>
+        <div><span class="fig">12</span><span class="cap">Indicadores</span></div>
+        <div><span class="fig">10</span><span class="cap">Gráficos EDA</span></div>
+        <div><span class="fig">3</span><span class="cap">Pantallas</span></div>
+        <div><span class="fig">1</span><span class="cap">Modelo IA</span></div>
+        <div><span class="fig">4</span><span class="cap">Págs. ensayo</span></div>
+      </div>
+
+      <p class="muted">
+        El marco pide entre 5 y 7 preguntas, entre 10 y 15 indicadores y entre 8 y 12 gráficos. Fijar
+        6, 12 y 10 cumple con holgura y deja el trabajo acotado. Cada número de más es una pregunta de
+        más que responder en la sustentación.
+      </p>
+
+      <h3>Los doce indicadores</h3>
+      <p class="tight">
+        Valor total liquidado · Valor facturado · Ticket promedio por liquidación · Participación de
+        recargos · Participación de transporte adicional · <strong>Días de liquidada a facturada</strong> ·
+        Tasa de anulación · Descuento promedio aplicado · Ingreso por vehículo · Ingreso por recorrido ·
+        Ingreso por tipo de tarifa · Participación de terceros frente a flota propia.
+      </p>
+      <p class="muted">
+        El sexto es el que da la historia: es el que revela el cuello de botella del proceso y el que
+        convierte el tablero en algo que alguien querría mirar todos los días.
+      </p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="balance">
+      <p class="sec-label">Usar el proceso de liquidaciones como caso</p>
+      <h2>Pros y contras</h2>
+      <p>
+        Trabajar sobre un proceso que ya conozco no es neutro: trae ventajas reales y trampas propias.
+        Vale la pena tenerlas escritas antes de empezar.
+      </p>
+
+      <div class="balance">
+
+        <div class="bcol up">
+          <h3><span class="tag up">A favor</span></h3>
+
+          <div class="bitem">
+            <b>Dominio real del proceso</b>
+            <p>No hay que estudiar un negocio ajeno ni fingir familiaridad. Cada decisión del tablero se puede justificar con criterio propio, que es justo lo que distingue una sustentación sólida de una recitada.</p>
+          </div>
+
+          <div class="bitem">
+            <b>Las preguntas salen auténticas</b>
+            <p>El criterio número uno del marco es que las preguntas sean específicas y no vagas. Viniendo de un proceso conocido, salen concretas sin esfuerzo.</p>
+          </div>
+
+          <div class="bitem">
+            <b>Las fórmulas ya están probadas</b>
+            <p>Los cálculos de la liquidación existen y funcionan. No hay que inventar definiciones de indicadores ni adivinar qué es bueno o malo: ya se sabe.</p>
+          </div>
+
+          <div class="bitem">
+            <b>Hay una historia de proceso, no solo cifras</b>
+            <p>La liquidación pasa por etapas —se elabora, se liquida, se aprueba, se factura— y eso permite medir tiempos y señalar dónde se atasca. Muy pocos proyectos de este tipo tienen eso.</p>
+          </div>
+
+          <div class="bitem">
+            <b>Los datos tienen de dónde agarrarse</b>
+            <p>Fechas, clientes, operadoras, vehículos, recorridos, tipos de tarifa y estados. Sobran ejes para segmentar, comparar y profundizar, que es lo que un tablero necesita para no quedarse plano.</p>
+          </div>
+
+          <div class="bitem">
+            <b>Sirve después</b>
+            <p>El marco pide expresamente que el resultado sea presentable en una entrevista. Un caso del propio sector profesional lo es; un ejercicio con datos de juguete, no.</p>
+          </div>
+        </div>
+
+        <div class="bcol down">
+          <h3><span class="tag down">En contra</span></h3>
+
+          <div class="bitem">
+            <b>Levanta expectativas por encima de lo pedido</b>
+            <p>Presentar un proceso real y complejo invita a que se pregunte por todo lo que lo rodea, mucho más allá de lo que el trabajo abarca.</p>
+            <span class="fix">→ Presentarlo como un caso de estudio acotado a un tablero, nunca como «mi sistema». Decir el alcance en voz alta al empezar.</span>
+          </div>
+
+          <div class="bitem">
+            <b>La jerga interna no se entiende afuera</b>
+            <p>Pernocte, planilla, recorrido, recargo, consecutivo, transporte adicional. Son palabras de todos los días adentro y ruido total para quien evalúa.</p>
+            <span class="fix">→ Definir cada término la primera vez que aparece y dejar un glosario breve en la documentación.</span>
+          </div>
+
+          <div class="bitem">
+            <b>Confidencialidad de por medio</b>
+            <p>Clientes, operadoras, tarifas y personas identificables. No es un detalle: es protección de datos y secreto comercial.</p>
+            <span class="fix">→ Resuelto con datos sintéticos calibrados, declarados desde los requisitos.</span>
+          </div>
+
+          <div class="bitem">
+            <b>Tentación de sobre-construir</b>
+            <p>Sabiendo programar, la salida fácil es construir una aplicación. Pero lo que se evalúa es un tablero en herramienta de inteligencia de negocios, y una aplicación propia probablemente no cuente como tal.</p>
+            <span class="fix">→ Tablero en la herramienta que pide el marco. La habilidad de programar se demuestra en la automatización, no en la interfaz.</span>
+          </div>
+
+          <div class="bitem">
+            <b>El sesgo de quien ya sabe</b>
+            <p>Lo obvio para uno no lo es para quien evalúa. Es fácil saltarse explicaciones que al jurado le faltan, y eso se lee como vacío.</p>
+            <span class="fix">→ Ensayar la sustentación con alguien ajeno al negocio y corregir todo lo que haya que explicar dos veces.</span>
+          </div>
+
+          <div class="bitem">
+            <b>La herramienta de tablero es terreno nuevo</b>
+            <p>El proceso se domina; la herramienta de visualización, no. Es la única curva de aprendizaje real del proyecto y cae en la semana de más carga.</p>
+            <span class="fix">→ Elegir la herramienta esta misma semana y practicar con ella antes de que llegue su turno.</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="cuidados">
+      <p class="sec-label">Reglas de operación</p>
+      <h2>Cosas a tener en cuenta</h2>
+      <p>
+        El objetivo declarado es claro: <strong>entregar algo sobresaliente por lo completo y lo
+        ordenado, no por lo complejo</strong>. Estas reglas existen para proteger esa decisión cuando
+        aparezca la tentación de agrandar el trabajo.
+      </p>
+
+      <ul class="rules">
+        <li>
+          <span class="mark">01</span>
+          <div>
+            <b>El alcance no se amplía</b>
+            <p>Seis preguntas, doce indicadores, tres pantallas, un modelo. Si aparece una idea buena, se anota en el apartado de mejoras futuras de la documentación, que además es un punto que el marco pide explícitamente.</p>
+          </div>
+        </li>
+        <li>
+          <span class="mark">02</span>
+          <div>
+            <b>Nada se afirma de más</b>
+            <p>No se dice que el tablero esté en producción, ni que una empresa lo use a diario, ni que los datos sean reales. Cada afirmación que no se pueda respaldar es una grieta en la sustentación.</p>
+          </div>
+        </li>
+        <li>
+          <span class="mark">03</span>
+          <div>
+            <b>Los datos sintéticos se declaran al principio, no al final</b>
+            <p>En los requisitos, en la documentación y en una lámina temprana de la presentación. Dicho de entrada se lee como criterio profesional; descubierto por el evaluador, se lee como omisión.</p>
+          </div>
+        </li>
+        <li>
+          <span class="mark">04</span>
+          <div>
+            <b>Se habla en lenguaje de negocio</b>
+            <p>La sustentación es sobre decisiones, no sobre código. Las herramientas se nombran cuando toca justificar una elección, no como demostración.</p>
+          </div>
+        </li>
+        <li>
+          <span class="mark">05</span>
+          <div>
+            <b>Cada gráfico responde a una pregunta</b>
+            <p>Es la frase textual del marco: no es visualización bonita sin razón. Si un gráfico no contesta a una de las seis preguntas, sobra.</p>
+          </div>
+        </li>
+        <li>
+          <span class="mark">06</span>
+          <div>
+            <b>Los mínimos se verifican uno por uno antes de subir</b>
+            <p>Las extensiones de cada documento, la cantidad de gráficos, las tres pantallas, los filtros, el video de cinco minutos. Son requisitos literales y se revisan con lista en mano.</p>
+          </div>
+        </li>
+        <li>
+          <span class="mark">07</span>
+          <div>
+            <b>Se entrega el 22, no el 27</b>
+            <p>Cinco días de margen para lo que salga mal: un archivo que no carga, la plataforma caída, una corrección de último momento. El plazo no se mueve y quedarse sin colchón es el único error que no tiene arreglo.</p>
+          </div>
+        </li>
+        <li>
+          <span class="mark">08</span>
+          <div>
+            <b>Las dudas de formato se preguntan ahora</b>
+            <p>Qué herramienta de tablero se acepta, si las cuatro páginas del ensayo incluyen portada y referencias, cómo se sube el video, si van los archivos comprimidos. Preguntarlo tarde cuesta trabajo rehecho.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="conceptos">
+      <p class="sec-label">La guía a sustentar</p>
+      <h2>Conceptos a dominar</h2>
+      <p>
+        Esta es la parte que se estudia. No hace falta profundidad de especialista: hace falta poder
+        <strong>explicar cada uno en una frase, en voz alta, sin leer</strong>. Si un concepto no se
+        puede decir con palabras propias, todavía no está listo.
+      </p>
+
+      <div class="cgroup">
+        <header><h3>Datos y calidad</h3><span>Módulos 8 · 10</span></header>
+        <dl class="concepts">
+          <div><dt>Dato crudo y dato limpio</dt><dd>El crudo es el que sale del sistema tal cual, con errores incluidos. El limpio ya pasó por validación y se puede sumar sin desconfiar del resultado.</dd></div>
+          <div><dt>Dato estructurado</dt><dd>El que vive en filas y columnas con un tipo definido. Frente a él está el no estructurado: textos libres, imágenes, audio.</dd></div>
+          <div><dt>Calidad de datos</dt><dd>Qué tan confiable es un conjunto de datos. Se mide por cuatro problemas concretos: campos vacíos, registros repetidos, valores fuera de rango e inconsistencias de formato.</dd></div>
+          <div><dt>Valor atípico</dt><dd>Un dato que se aleja mucho del comportamiento normal. Puede ser un error de carga o un hecho real excepcional; distinguirlo es parte del análisis, no se borra por defecto.</dd></div>
+          <div><dt>Análisis exploratorio</dt><dd>Mirar los datos antes de sacar conclusiones: cuántos hay, qué falta, qué se repite, qué se relaciona con qué. Es el paso previo a cualquier indicador.</dd></div>
+          <div><dt>Correlación y causalidad</dt><dd>Que dos cosas se muevan juntas no significa que una cause la otra. Es la pregunta clásica del jurado y conviene tener un ejemplo propio listo.</dd></div>
+          <div><dt>Datos sintéticos</dt><dd>Registros generados artificialmente que conservan la estructura y las proporciones de los reales. Se usan cuando los originales no se pueden exponer.</dd></div>
+        </dl>
+      </div>
+
+      <div class="cgroup">
+        <header><h3>Indicadores y negocio</h3><span>Módulos 8 · 17</span></header>
+        <dl class="concepts">
+          <div><dt>Métrica e indicador</dt><dd>Toda medida es una métrica; solo es indicador la que sirve para tomar una decisión. La diferencia está en el uso, no en el cálculo.</dd></div>
+          <div><dt>Indicador primario y secundario</dt><dd>El primario responde directamente una pregunta de negocio. El secundario ayuda a explicar por qué el primario se movió.</dd></div>
+          <div><dt>Punto de referencia</dt><dd>El valor contra el cual se compara para saber si un resultado es bueno o malo. Sin él, un número solo es un número.</dd></div>
+          <div><dt>Dimensión y medida</dt><dd>La medida es lo que se suma o promedia; la dimensión es aquello por lo que se parte el análisis. Aquí: el valor facturado es medida, la operadora es dimensión.</dd></div>
+          <div><dt>Granularidad</dt><dd>El nivel de detalle de cada registro. Una liquidación mensual y una línea individual de servicio son dos granularidades distintas del mismo hecho.</dd></div>
+          <div><dt>Diccionario de datos</dt><dd>El documento que define cada campo y cada indicador: qué significa, cómo se calcula y cada cuánto se actualiza. Es lo que permite que otro retome el trabajo.</dd></div>
+          <div><dt>Retorno de la inversión</dt><dd>Cuánto beneficio deja un proyecto frente a lo que costó. Conviene poder estimarlo para el propio tablero, aunque sea de forma aproximada.</dd></div>
+        </dl>
+      </div>
+
+      <div class="cgroup">
+        <header><h3>Proceso y automatización</h3><span>Módulos 9 · 10 · 17</span></header>
+        <dl class="concepts">
+          <div><dt>Extracción, transformación y carga</dt><dd>Las tres etapas de mover datos: sacarlos del origen, limpiarlos y calcular sobre ellos, y dejarlos listos en el destino.</dd></div>
+          <div><dt>Flujo automatizado</dt><dd>Ese recorrido encadenado y ejecutable de una sola vez, de modo que nadie tenga que repetir pasos a mano cada mes.</dd></div>
+          <div><dt>Validación de integridad</dt><dd>Comprobaciones que confirman que el resultado cuadra: que los totales sumen, que no falten referencias, que no haya registros huérfanos.</dd></div>
+          <div><dt>Registro de ejecución</dt><dd>La bitácora de qué pasó en cada corrida: cuántos registros entraron, cuáles se descartaron y por qué. Es lo que permite auditar el número.</dd></div>
+          <div><dt>Reproducibilidad</dt><dd>Que ejecutar el mismo proceso sobre los mismos datos dé exactamente el mismo resultado. Sin esto, ningún número es defendible.</dd></div>
+          <div><dt>Tiempo de ciclo</dt><dd>Cuánto tarda algo en recorrer un proceso de principio a fin. Aquí, los días que pasan desde que una liquidación se elabora hasta que se factura.</dd></div>
+          <div><dt>Cuello de botella</dt><dd>La etapa donde el proceso se detiene más tiempo y que marca el ritmo de todo lo demás. Encontrarlo es el hallazgo principal del tablero.</dd></div>
+          <div><dt>Ciclo de vida de un proyecto de datos</dt><dd>La secuencia ordenada que va de entender el negocio a desplegar el resultado. Sirve para explicar que el proyecto siguió un método y no una improvisación.</dd></div>
+        </dl>
+      </div>
+
+      <div class="cgroup">
+        <header><h3>Visualización</h3><span>Módulo 8</span></header>
+        <dl class="concepts">
+          <div><dt>Narrativa con datos</dt><dd>Construir el tablero como un argumento con orden, no como una colección de gráficos. Cada visual responde algo y lleva al siguiente.</dd></div>
+          <div><dt>El gráfico según la pregunta</dt><dd>Una cifra destacada para un valor único, una línea para evolución en el tiempo, una barra para comparar categorías. El tipo no se elige por gusto.</dd></div>
+          <div><dt>Profundizar</dt><dd>Pasar de una cifra resumida a su detalle sin salir del tablero: del total del mes a la línea concreta que lo explica.</dd></div>
+          <div><dt>Filtro global</dt><dd>Un control que afecta a todas las visuales de la pantalla a la vez, normalmente el rango de fechas o la operadora.</dd></div>
+          <div><dt>Jerarquía visual</dt><dd>Que lo importante se vea primero, por tamaño, posición y contraste. Un tablero donde todo pesa igual no comunica nada.</dd></div>
+          <div><dt>Tablero ejecutivo y operacional</dt><dd>El ejecutivo responde «cómo vamos» en treinta segundos; el operacional responde «qué hago al respecto». Son audiencias y niveles de detalle distintos.</dd></div>
+        </dl>
+      </div>
+
+      <div class="cgroup">
+        <header><h3>Inteligencia artificial</h3><span>Módulos 1 · 12 · 13 · 17</span></header>
+        <dl class="concepts">
+          <div><dt>Cómo encajan los términos</dt><dd>La inteligencia artificial es el campo amplio; dentro está el aprendizaje automático, que aprende de datos; dentro de este, el aprendizaje profundo; y aparte, la inteligencia artificial generativa, que produce contenido nuevo.</dd></div>
+          <div><dt>Aprendizaje supervisado</dt><dd>El modelo aprende de ejemplos ya etiquetados con la respuesta correcta. Sirve para predecir un valor o clasificar en categorías conocidas.</dd></div>
+          <div><dt>Aprendizaje no supervisado</dt><dd>No hay respuesta correcta previa: el modelo busca agrupaciones y patrones por su cuenta. Es lo que se usa para segmentar.</dd></div>
+          <div><dt>Detección de anomalías</dt><dd>Identificar automáticamente registros que se salen del comportamiento esperado. Es el componente elegido para este proyecto.</dd></div>
+          <div><dt>Sobreajuste</dt><dd>Cuando un modelo se aprende de memoria los datos con los que se entrenó y falla con datos nuevos. Pregunta frecuente en sustentaciones.</dd></div>
+          <div><dt>Cómo se mide un modelo</dt><dd>La precisión mide qué proporción de lo señalado era correcto; la exhaustividad, qué proporción de lo que había se alcanzó a señalar. Casi siempre hay que sacrificar una por la otra.</dd></div>
+          <div><dt>Explicabilidad</dt><dd>Poder decir por qué el modelo llegó a ese resultado. En un proceso que termina en una factura, esto no es opcional.</dd></div>
+        </dl>
+      </div>
+
+      <div class="cgroup">
+        <header><h3>Gobernanza y ética</h3><span>Módulos 17 · 18</span></header>
+        <dl class="concepts">
+          <div><dt>Gobernanza de datos</dt><dd>Las reglas sobre quién puede ver qué, cómo se cuida y quién responde por ello. Es el marco donde encaja la decisión de usar datos sintéticos.</dd></div>
+          <div><dt>Anonimización</dt><dd>Quitar del dato todo lo que permita identificar a una persona o a una empresa, de forma que no se pueda revertir.</dd></div>
+          <div><dt>Protección de datos personales</dt><dd>En Colombia la rige la Ley 1581 de 2012. Establece que tratar datos de una persona exige su autorización previa, y refuerza la protección de los datos sensibles.</dd></div>
+          <div><dt>Sesgo algorítmico</dt><dd>Cuando un modelo reproduce o amplifica una desigualdad presente en los datos con los que aprendió. Es el riesgo ético central de cualquier proyecto de IA.</dd></div>
+          <div><dt>Gestión de riesgos del proyecto</dt><dd>Identificar antes de empezar qué puede salir mal —técnico, legal, operativo— y qué se hace si pasa. Tenerlo escrito es señal de madurez, no de desconfianza.</dd></div>
+          <div><dt>Huella de los modelos</dt><dd>Entrenar y ejecutar modelos grandes consume energía y tiene un costo ambiental. Es el argumento a favor de usar el modelo más simple que resuelva el problema.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="preguntas">
+      <p class="sec-label">Ensayo previo</p>
+      <h2>Preguntas probables</h2>
+      <p>
+        Lo que con más probabilidad se pregunta, con la respuesta ya pensada. Conviene decirlas en voz
+        alta hasta que salgan sin esfuerzo.
+      </p>
+
+      <div class="qa">
+        <article>
+          <h3>¿Por qué los datos no son reales?</h3>
+          <p>Porque el proceso involucra tarifas comerciales, clientes identificables y personas. Exponerlos en un trabajo académico cruza confidencialidad y la Ley 1581. La estructura, las reglas de cálculo y las proporciones sí son las del proceso real; los registros individuales se generaron. Es la práctica estándar para publicar un caso.</p>
+        </article>
+        <article>
+          <h3>¿Cómo sé que los resultados significan algo si los datos son generados?</h3>
+          <p>Porque lo que se evalúa es el método y las conclusiones relativas, no las cifras absolutas. Las distribuciones, la estacionalidad y las relaciones entre variables se calibraron sobre el comportamiento real, así que los indicadores son representativos en proporción.</p>
+        </article>
+        <article>
+          <h3>¿Qué decisión concreta cambia gracias a este tablero?</h3>
+          <p>Dos. La primera: saber en qué etapa se detienen las liquidaciones permite intervenir ahí y cobrar antes. La segunda: detectar líneas con valores anómalos antes de facturar evita corregir una factura ya emitida.</p>
+        </article>
+        <article>
+          <h3>¿Por qué ese indicador y no otro?</h3>
+          <p>Porque cada uno de los doce responde a una de las seis preguntas de negocio. Ninguno está por completar cupo. Si un indicador no contesta una pregunta, no entró.</p>
+        </article>
+        <article>
+          <h3>¿Por qué ese tipo de gráfico?</h3>
+          <p>Porque el tipo se elige por la pregunta: cifra destacada para un valor único, línea para evolución en el tiempo, barra para comparar categorías. Es el criterio que pide el propio marco del proyecto.</p>
+        </article>
+        <article>
+          <h3>¿Dónde está la inteligencia artificial en todo esto?</h3>
+          <p>En la detección automática de valores anómalos en las líneas de liquidación. Se eligió un enfoque explicable a propósito: en un proceso que termina en una factura hay que poder justificar por qué se marcó un registro.</p>
+        </article>
+        <article>
+          <h3>¿Por qué no usaste un modelo más avanzado?</h3>
+          <p>Porque el problema no lo necesita y porque un modelo más pesado habría sido más difícil de explicar y más caro de ejecutar, sin mejorar la decisión. Elegir el modelo más simple que resuelve el problema es criterio, no limitación.</p>
+        </article>
+        <article>
+          <h3>¿Qué limitaciones tiene tu trabajo?</h3>
+          <p>Tres, y están documentadas: los datos son sintéticos, el alcance se cerró en seis preguntas cuando el proceso admite más, y el flujo se ejecuta bajo demanda en lugar de estar programado en un servidor. Las tres están en el apartado de mejoras futuras.</p>
+        </article>
+        <article>
+          <h3>¿Qué harías distinto si tuvieras más tiempo?</h3>
+          <p>Dejar el flujo corriendo de forma automática cada mes, incorporar el costo operativo para pasar de ingresos a márgenes, y añadir una proyección del valor a liquidar del mes siguiente.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="ruta">
+      <p class="sec-label">Planificación · seis tramos</p>
+      <h2>Ruta de trabajo</h2>
+      <p>
+        Del 10 de septiembre al 22 de octubre. El orden importa: cada tramo alimenta al siguiente, y
+        los dos de mayor peso caen en el centro, cuando todavía hay margen de maniobra.
+      </p>
+
+      <div class="route">
+        <div class="leg">
+          <div class="when"><b>Tramo 1</b>10 – 20 SEP</div>
+          <div class="what">
+            <b>Preparar el terreno</b>
+            <p>Dejar listo el conjunto de datos de trabajo, elegir la herramienta de tablero, fijar el título del ensayo y resolver con el docente las dudas de formato.</p>
+          </div>
+        </div>
+        <div class="leg">
+          <div class="when"><b>Tramo 2</b>21 – 27 SEP</div>
+          <div class="what">
+            <b>Definir qué se va a responder</b>
+            <p>El documento de requisitos: contexto del negocio, usuarios, las seis preguntas, las fuentes y las restricciones de privacidad.</p>
+          </div>
+        </div>
+        <div class="leg">
+          <div class="when"><b>Tramo 3</b>28 SEP – 4 OCT</div>
+          <div class="what">
+            <b>Explorar los datos</b>
+            <p>Revisar qué hay, qué falta, qué está sucio y qué se relaciona con qué. Diez gráficos y una valoración de la calidad del conjunto.</p>
+          </div>
+        </div>
+        <div class="leg">
+          <div class="when"><b>Tramo 4</b>5 – 11 OCT</div>
+          <div class="what">
+            <b>Indicadores y automatización</b>
+            <p>Definir los doce indicadores con su cálculo y su referencia, y construir el flujo que los alimenta. El tramo más pesado: vale el 35% de la evaluación técnica. En paralelo, la bibliografía del ensayo.</p>
+          </div>
+        </div>
+        <div class="leg">
+          <div class="when"><b>Tramo 5</b>12 – 18 OCT</div>
+          <div class="what">
+            <b>Diseñar y construir el tablero</b>
+            <p>Primero el boceto de las tres pantallas y la paleta; después el tablero funcionando, con filtros y capacidad de profundizar. El ensayo queda completo esta semana.</p>
+          </div>
+        </div>
+        <div class="leg final">
+          <div class="when"><b>Tramo 6</b>19 – 22 OCT</div>
+          <div class="what">
+            <b>Documentar, ensayar y entregar</b>
+            <p>Guía técnica, guía de usuario, presentación, video de cinco minutos. Revisión de mínimos con lista en mano, ensayo de la sustentación con alguien ajeno al negocio y carga en plataforma el 22.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="muted" style="margin-top:24px">
+        Del 23 al 27 de octubre no hay trabajo planificado. Ese margen existe para lo que salga mal, y
+        se protege.
+      </p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="cierre" style="margin-bottom:0">
+      <div class="closing">
+        <p class="big">Lo que se sustenta es el criterio, no el tamaño del trabajo.</p>
+        <p class="muted">
+          Seis preguntas bien elegidas, doce indicadores que alguien usaría, un cuello de botella
+          encontrado y un alcance que se cumplió completo. Eso es un trabajo sobresaliente. Un proyecto
+          más grande, entregado a medias y explicado con dudas, no lo es.
+        </p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-list a'));
+    var map = {};
+    links.forEach(function (a) {
+      var el = document.querySelector(a.getAttribute('href'));
+      if (el) map[el.id] = a;
+    });
+    var seen = {};
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+      var active = null;
+      Object.keys(map).forEach(function (id) { if (seen[id] && !active) active = id; });
+      links.forEach(function (a) { a.classList.remove('current'); });
+      if (active) map[active].classList.add('current');
+    }, { rootMargin: '-10% 0px -70% 0px' });
+    Object.keys(map).forEach(function (id) { obs.observe(document.getElementById(id)); });
+  })();
+</script>
