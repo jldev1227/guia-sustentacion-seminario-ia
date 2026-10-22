@@ -193,6 +193,19 @@
     margin: 0 0 36px;
   }
 
+  .download-cta {
+    display: inline-block;
+    color: var(--panel);
+    background: var(--pro);
+    padding: 12px 18px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-decoration: none;
+    margin: 0 0 24px;
+  }
+
+  .download-cta:hover { filter: brightness(0.92); }
+
   .docblock {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
@@ -683,14 +696,16 @@
       <h1>De liquidaciones a decisiones visibles</h1>
       <p class="lede">
         Un tablero de control sobre la liquidación de servicios de transporte especial de personal.
-        Caso propio, alcance cerrado, datos sintéticos declarados. Esta página es lo que se sustenta.
+        Caso académico con datos sintéticos y límites declarados. Autor: Camilo Cepeda Orduz ·
+        Fundación de Educación Superior San José.
       </p>
+      <a class="download-cta" href="descargas/Entregables_Seminario_IA_Camilo_Cepeda_Orduz.zip" download>Descargar todos los entregables · ZIP</a>
       <dl class="docblock">
         <div><dt>Período</dt><dd>2026-2</dd></div>
         <div><dt>Ventana</dt><dd>16 – 27 OCT</dd></div>
-        <div><dt>Entrega meta</dt><dd>22 OCT</dd></div>
+        <div><dt>Cierre de carga</dt><dd>27 OCT</dd></div>
         <div><dt>Modalidad</dt><dd>Individual</dd></div>
-        <div><dt>Estado</dt><dd>Planificación</dd></div>
+        <div><dt>Estado</dt><dd>Paquete preparado</dd></div>
       </dl>
       <p class="cta-row"><a class="cta" href="guion/">Abrir el guion interactivo de 10 minutos →</a></p>
     </header>
@@ -725,9 +740,9 @@
       </div>
 
       <p>
-        Lo que el marco pide no es un ejercicio de clase, sino algo que un negocio real pueda usar:
-        que responda preguntas concretas, que se apoye en datos verificados, que se actualice solo y
-        que alguien más pueda mantener cuando uno no esté.
+        El proyecto traduce preguntas de negocio en indicadores, transformaciones reproducibles y
+        visualizaciones. Los resultados ilustran el método con datos sintéticos y no se presentan
+        como evidencia de una operación real.
       </p>
       <p>
         El peso está repartido de forma desigual, y eso orienta el esfuerzo: <strong>la automatización
@@ -742,14 +757,13 @@
       <p class="sec-label">Decisión tomada</p>
       <h2>Qué temática se usará</h2>
       <p>
-        El caso es la <strong>liquidación de servicios de transporte especial de personal</strong>
-        para operadoras del sector de hidrocarburos: el proceso por el cual una empresa de transporte
-        traduce los servicios prestados durante un mes —viajes, recorridos, horas, kilómetros,
-        pernoctes y recargos— en una liquidación que se aprueba y se factura al cliente.
+        El caso académico es la <strong>liquidación de servicios de transporte especial de personal</strong>:
+        un proceso ilustrativo en el que viajes, recorridos, horas, kilómetros, pernoctes y recargos se
+        organizan para revisar liquidaciones y facturación.
       </p>
       <p>
-        Es un caso propio. Conozco el proceso por dentro, y esa es exactamente la ventaja que hace que
-        la sustentación sea fluida en lugar de recitada.
+        El alcance se limita a los registros, supuestos y reglas documentados en el conjunto sintético
+        que acompaña la entrega. La sustentación debe explicar qué se midió y qué no se puede inferir.
       </p>
 
       <h3>Las dos entregas comparten escenario</h3>
@@ -777,16 +791,13 @@
 
       <h3>Los datos serán sintéticos, y se dice de frente</h3>
       <p>
-        El proceso real involucra nombres de clientes, operadoras petroleras, placas, terceros y
-        tarifas comerciales. Llevar eso a un trabajo académico cruza confidencialidad y protección de
-        datos personales. La decisión es trabajar con un <strong>conjunto sintético calibrado</strong>:
-        la estructura, las reglas de cálculo y las proporciones son las del proceso real; los
-        registros individuales no existen.
+        El proyecto trabaja con un <strong>conjunto de datos sintético</strong> creado para fines
+        académicos. No se afirma que sus registros, distribuciones o resultados representen a una
+        organización real. Esta declaración evita confundir el ejercicio con un sistema en producción.
       </p>
       <p class="muted">
-        Esto no se esconde ni se pide disculpas por ello: se declara en los requisitos, en la
-        documentación y en una lámina de la presentación, enmarcado como lo que es —una decisión de
-        gobernanza, la misma que toma cualquier analista serio que publica un caso.
+        El carácter sintético y los límites de interpretación se explican en los requisitos, la
+        documentación y la presentación.
       </p>
     </section>
 
@@ -827,9 +838,9 @@
 
       <h3>El componente de inteligencia artificial</h3>
       <p>
-        El marco del proyecto no exige un modelo, pero el seminario es de inteligencia artificial y un
-        tablero sin nada de IA deja la sustentación coja. Se incluye <strong>uno solo</strong>, y
-        elegido porque resuelve un problema real del proceso:
+        Como complemento analítico del tablero se incluye un método estadístico explicable para
+        priorizar valores inusuales. Se presenta como decisión de diseño del proyecto, no como prueba
+        de que exista una solución desplegada en una empresa:
       </p>
       <p>
         <strong>Detección de valores anómalos en los ítems de liquidación.</strong> Identificar de
@@ -858,7 +869,7 @@
         <div><span class="fig">12</span><span class="cap">Indicadores</span></div>
         <div><span class="fig">10</span><span class="cap">Gráficos EDA</span></div>
         <div><span class="fig">3</span><span class="cap">Pantallas</span></div>
-        <div><span class="fig">1</span><span class="cap">Modelo IA</span></div>
+        <div><span class="fig">1</span><span class="cap">Control analítico</span></div>
         <div><span class="fig">4</span><span class="cap">Págs. ensayo</span></div>
       </div>
 
@@ -886,8 +897,8 @@
       <p class="sec-label">Usar el proceso de liquidaciones como caso</p>
       <h2>Pros y contras</h2>
       <p>
-        Trabajar sobre un proceso que ya conozco no es neutro: trae ventajas reales y trampas propias.
-        Vale la pena tenerlas escritas antes de empezar.
+        El caso de liquidación tiene ventajas para explicar un flujo completo y límites que conviene
+        declarar durante la sustentación.
       </p>
 
       <div class="balance">
@@ -896,33 +907,33 @@
           <h3><span class="tag up">A favor</span></h3>
 
           <div class="bitem">
-            <b>Dominio real del proceso</b>
-            <p>No hay que estudiar un negocio ajeno ni fingir familiaridad. Cada decisión del tablero se puede justificar con criterio propio, que es justo lo que distingue una sustentación sólida de una recitada.</p>
+            <b>Alcance definido</b>
+            <p>Las entidades, campos y etapas del proceso están descritos en los requisitos y en el diccionario de datos. Cada visualización se puede justificar con una pregunta de negocio concreta.</p>
           </div>
 
           <div class="bitem">
             <b>Las preguntas salen auténticas</b>
-            <p>El criterio número uno del marco es que las preguntas sean específicas y no vagas. Viniendo de un proceso conocido, salen concretas sin esfuerzo.</p>
+            <p>Las preguntas específicas facilitan relacionar los datos disponibles con los indicadores y visualizaciones incluidos en el proyecto.</p>
           </div>
 
           <div class="bitem">
-            <b>Las fórmulas ya están probadas</b>
-            <p>Los cálculos de la liquidación existen y funcionan. No hay que inventar definiciones de indicadores ni adivinar qué es bueno o malo: ya se sabe.</p>
+            <b>Indicadores documentados</b>
+            <p>Las fórmulas se especifican en el catálogo de KPI y se pueden revisar junto con el código que prepara los datos.</p>
           </div>
 
           <div class="bitem">
             <b>Hay una historia de proceso, no solo cifras</b>
-            <p>La liquidación pasa por etapas —se elabora, se liquida, se aprueba, se factura— y eso permite medir tiempos y señalar dónde se atasca. Muy pocos proyectos de este tipo tienen eso.</p>
+            <p>El conjunto sintético contiene etapas de liquidación, aprobación y facturación que permiten ilustrar el cálculo de tiempos de proceso.</p>
           </div>
 
           <div class="bitem">
             <b>Los datos tienen de dónde agarrarse</b>
-            <p>Fechas, clientes, operadoras, vehículos, recorridos, tipos de tarifa y estados. Sobran ejes para segmentar, comparar y profundizar, que es lo que un tablero necesita para no quedarse plano.</p>
+            <p>El esquema sintético incluye fechas, categorías, vehículos, recorridos, tipos de tarifa y estados para segmentar y comparar los resultados de práctica.</p>
           </div>
 
           <div class="bitem">
             <b>Sirve después</b>
-            <p>El marco pide expresamente que el resultado sea presentable en una entrevista. Un caso del propio sector profesional lo es; un ejercicio con datos de juguete, no.</p>
+            <p>El paquete permite presentar un caso de estudio reproducible, acompañado por su método, sus supuestos y las limitaciones de los datos.</p>
           </div>
         </div>
 
@@ -931,7 +942,7 @@
 
           <div class="bitem">
             <b>Levanta expectativas por encima de lo pedido</b>
-            <p>Presentar un proceso real y complejo invita a que se pregunte por todo lo que lo rodea, mucho más allá de lo que el trabajo abarca.</p>
+            <p>Un caso de liquidación puede abrir preguntas sobre reglas y decisiones que quedan fuera del alcance de este ejercicio.</p>
             <span class="fix">→ Presentarlo como un caso de estudio acotado a un tablero, nunca como «mi sistema». Decir el alcance en voz alta al empezar.</span>
           </div>
 
@@ -943,8 +954,8 @@
 
           <div class="bitem">
             <b>Confidencialidad de por medio</b>
-            <p>Clientes, operadoras, tarifas y personas identificables. No es un detalle: es protección de datos y secreto comercial.</p>
-            <span class="fix">→ Resuelto con datos sintéticos calibrados, declarados desde los requisitos.</span>
+            <p>El proyecto evita incorporar registros personales o comerciales al usar datos sintéticos.</p>
+            <span class="fix">→ Declarar el origen sintético y no presentar las cifras como resultados reales.</span>
           </div>
 
           <div class="bitem">
@@ -961,8 +972,8 @@
 
           <div class="bitem">
             <b>La herramienta de tablero es terreno nuevo</b>
-            <p>El proceso se domina; la herramienta de visualización, no. Es la única curva de aprendizaje real del proyecto y cae en la semana de más carga.</p>
-            <span class="fix">→ Elegir la herramienta esta misma semana y practicar con ella antes de que llegue su turno.</span>
+            <p>El proyecto de tablero se entrega como PBIP y debe abrirse y actualizarse en Power BI Desktop.</p>
+            <span class="fix">→ Ejecutar el script de configuración incluido, abrir el PBIP y comprobar filtros y páginas en Power BI Desktop.</span>
           </div>
         </div>
 
@@ -1227,7 +1238,7 @@ DIVIDE(CALCULATE(SUM(Items[valor_final]), Items[es_tercero] = TRUE),
           <div><dt>Valor atípico</dt><dd>Un dato que se aleja mucho del comportamiento normal. Puede ser un error de carga o un hecho real excepcional; distinguirlo es parte del análisis, no se borra por defecto.</dd></div>
           <div><dt>Análisis exploratorio</dt><dd>Mirar los datos antes de sacar conclusiones: cuántos hay, qué falta, qué se repite, qué se relaciona con qué. Es el paso previo a cualquier indicador.</dd></div>
           <div><dt>Correlación y causalidad</dt><dd>Que dos cosas se muevan juntas no significa que una cause la otra. Es la pregunta clásica del jurado y conviene tener un ejemplo propio listo.</dd></div>
-          <div><dt>Datos sintéticos</dt><dd>Registros generados artificialmente que conservan la estructura y las proporciones de los reales. Se usan cuando los originales no se pueden exponer.</dd></div>
+          <div><dt>Datos sintéticos</dt><dd>Registros generados artificialmente para practicar un método. No se asume que reproduzcan las distribuciones o proporciones de una organización.</dd></div>
         </dl>
       </div>
 
@@ -1326,15 +1337,15 @@ DIVIDE(CALCULATE(SUM(Items[valor_final]), Items[es_tercero] = TRUE),
       <div class="qa">
         <article>
           <h3>¿Por qué los datos no son reales?</h3>
-          <p>Porque el proceso involucra tarifas comerciales, clientes identificables y personas. Exponerlos en un trabajo académico cruza confidencialidad y la Ley 1581. La estructura, las reglas de cálculo y las proporciones sí son las del proceso real; los registros individuales se generaron. Es la práctica estándar para publicar un caso.</p>
+          <p>El ejercicio se diseñó con datos generados y no incluye registros personales o comerciales de una empresa. La Ley 1581 regula el tratamiento de datos personales; la guía no demuestra que una base real haya sido usada ni permite atribuirle resultados.</p>
         </article>
         <article>
           <h3>¿Cómo sé que los resultados significan algo si los datos son generados?</h3>
-          <p>Porque lo que se evalúa es el método y las conclusiones relativas, no las cifras absolutas. Las distribuciones, la estacionalidad y las relaciones entre variables se calibraron sobre el comportamiento real, así que los indicadores son representativos en proporción.</p>
+          <p>Los datos sintéticos sirven para recorrer el proceso técnico y demostrar los cálculos. Sus cifras, distribuciones y conclusiones se limitan al conjunto generado y no estiman el comportamiento de una operación real.</p>
         </article>
         <article>
           <h3>¿Qué decisión concreta cambia gracias a este tablero?</h3>
-          <p>Dos. La primera: saber en qué etapa se detienen las liquidaciones permite intervenir ahí y cobrar antes. La segunda: detectar líneas con valores anómalos antes de facturar evita corregir una factura ya emitida.</p>
+          <p>El tablero permite localizar qué etapas o categorías concentran los valores del conjunto sintético. Cualquier intervención, cobro o ajuste de factura requeriría validación con información y responsables de una operación real.</p>
         </article>
         <article>
           <h3>¿Por qué ese indicador y no otro?</h3>
@@ -1385,62 +1396,59 @@ DIVIDE(CALCULATE(SUM(Items[valor_final]), Items[es_tercero] = TRUE),
 
     <!-- ─────────────────────────────────────────────────── -->
     <section id="ruta">
-      <p class="sec-label">Planificación · seis tramos</p>
-      <h2>Ruta de trabajo</h2>
+      <p class="sec-label">Antes de cargar · seis verificaciones</p>
+      <h2>Ruta de verificación</h2>
       <p>
-        Del 10 de septiembre al 22 de octubre. El orden importa: cada tramo alimenta al siguiente, y
-        los dos de mayor peso caen en el centro, cuando todavía hay margen de maniobra.
+        La ventana de entrega indicada en la guía académica va del 16 al 27 de octubre de 2026. Use
+        esta lista para revisar el paquete antes de cargarlo en la plataforma.
       </p>
 
       <div class="route">
         <div class="leg">
-          <div class="when"><b>Tramo 1</b>10 – 20 SEP</div>
+          <div class="when"><b>Paso 1</b>FUENTES</div>
           <div class="what">
-            <b>Preparar el terreno</b>
-            <p>Dejar listo el conjunto de datos de trabajo, elegir la herramienta de tablero, fijar el título del ensayo y resolver con el docente las dudas de formato.</p>
+            <b>Revisar la documentación</b>
+            <p>Confirmar que los entregables correspondan al marco del seminario y que el ensayo conserve los datos institucionales confirmados.</p>
           </div>
         </div>
         <div class="leg">
-          <div class="when"><b>Tramo 2</b>21 – 27 SEP</div>
+          <div class="when"><b>Paso 2</b>E1</div>
           <div class="what">
-            <b>Definir qué se va a responder</b>
-            <p>El documento de requisitos: contexto del negocio, usuarios, las seis preguntas, las fuentes y las restricciones de privacidad.</p>
+            <b>Comprobar los requisitos</b>
+            <p>Revisar el contexto, los usuarios, las preguntas de negocio, las fuentes y las restricciones declaradas.</p>
           </div>
         </div>
         <div class="leg">
-          <div class="when"><b>Tramo 3</b>28 SEP – 4 OCT</div>
+          <div class="when"><b>Paso 3</b>E2–E3</div>
           <div class="what">
-            <b>Explorar los datos</b>
-            <p>Revisar qué hay, qué falta, qué está sucio y qué se relaciona con qué. Diez gráficos y una valoración de la calidad del conjunto.</p>
+            <b>Revisar análisis e indicadores</b>
+            <p>Confirmar que la exploración, los KPI y sus definiciones describan el conjunto sintético sin generalizar sus resultados.</p>
           </div>
         </div>
         <div class="leg">
-          <div class="when"><b>Tramo 4</b>5 – 11 OCT</div>
+          <div class="when"><b>Paso 4</b>E4–E5</div>
           <div class="what">
-            <b>Indicadores y automatización</b>
-            <p>Definir los doce indicadores con su cálculo y su referencia, y construir el flujo que los alimenta. El tramo más pesado: vale el 35% de la evaluación técnica. En paralelo, la bibliografía del ensayo.</p>
+            <b>Verificar ETL y diseño</b>
+            <p>Ejecutar el flujo de datos y cotejar las validaciones con el diseño de las visualizaciones.</p>
           </div>
         </div>
         <div class="leg">
-          <div class="when"><b>Tramo 5</b>12 – 18 OCT</div>
+          <div class="when"><b>Paso 5</b>E6</div>
           <div class="what">
-            <b>Diseñar y construir el tablero</b>
-            <p>Primero el boceto de las tres pantallas y la paleta; después el tablero funcionando, con filtros y capacidad de profundizar. El ensayo queda completo esta semana.</p>
+            <b>Abrir el proyecto Power BI</b>
+            <p>Ejecutar el script de configuración incluido, abrir el PBIP en Power BI Desktop y comprobar páginas, filtros y actualización local.</p>
           </div>
         </div>
         <div class="leg final">
-          <div class="when"><b>Tramo 6</b>19 – 22 OCT</div>
+          <div class="when"><b>Paso 6</b>E7 + ENVÍO</div>
           <div class="what">
-            <b>Documentar, ensayar y entregar</b>
-            <p>Guía técnica, guía de usuario, presentación, video de cinco minutos. Revisión de mínimos con lista en mano, ensayo de la sustentación con alguien ajeno al negocio y carga en plataforma el 22.</p>
+            <b>Revisar el paquete y completar el video</b>
+            <p>Leer la documentación, revisar la presentación y grabar el video de cinco minutos requerido. El ZIP preparado incluye un guion de apoyo, no la grabación. Cargar los archivos antes del cierre oficial.</p>
           </div>
         </div>
       </div>
 
-      <p class="muted" style="margin-top:24px">
-        Del 23 al 27 de octubre no hay trabajo planificado. Ese margen existe para lo que salga mal, y
-        se protege.
-      </p>
+      <p class="muted" style="margin-top:24px">La guía del video no reemplaza la grabación final. Compruebe los formatos solicitados en los PDF antes de enviar.</p>
     </section>
 
     <!-- ─────────────────────────────────────────────────── -->

@@ -314,7 +314,7 @@
         <p class="eyebrow">Opción de grado · Seminario de Inteligencia Artificial 2026-2</p>
         <h1>De liquidaciones a decisiones visibles</h1>
         <p class="lede">Un tablero de control sobre la liquidación de servicios de transporte especial de personal: del dato crudo al indicador que cambia una decisión.</p>
-        <span class="badge">Datos sintéticos calibrados · declarados desde los requisitos</span>
+        <span class="badge">Datos sintéticos · escenario académico</span>
       </div>
       <div class="tiles">
         <div><span class="fig">${D.meses.length}</span><span class="cap">Meses</span></div>
@@ -493,7 +493,7 @@
         <h3 style="font-family:var(--report);font-size:15px;margin:0 0 4px">Administrar parámetros</h3>
         <label>Nombre</label><div class="field">RutaDatos</div>
         <label>Tipo</label><div class="field">Texto</div>
-        <label>Valor actual</label><div class="field">C:\\Users\\&lt;usuario&gt;\\opcion-grado-seminario-ia\\JulianLopez_Dashboard_Proyecto\\00_DATOS\\limpio</div>
+        <label>Valor actual</label><div class="field">&lt;carpeta extraída&gt;\\01_Proyecto_Tecnico\\00_DATOS\\limpio</div>
         <div class="pq-explica" style="margin:16px 0 0">Las cuatro consultas leen su archivo desde aquí. Si el evaluador abre el .pbix en otro computador, cambia <b>este único valor</b> y todo vuelve a cargar.</div>
       </div>`;
       status = '<span>Parámetro de texto</span><span></span>';
@@ -710,15 +710,15 @@
       <h2>Lo que el tablero cambia</h2>
       <div style="margin-top:18px">
         <div class="hallazgo"><span class="fig">${fmtD(M0.K05)} d</span><div><b>de ${fmtD(M0.K04)} días se van esperando aprobación</b><p>El ${fmtP(pct(M0.K05, M0.K04))} del ciclo está en una sola etapa: ahí se interviene para cobrar antes.</p></div></div>
-        <div class="hallazgo"><span class="fig">${nf(M0.nAnom)}</span><div><b>servicios atípicos para revisar antes de facturar</b><p>Corregir antes de emitir la factura cuesta menos que anularla después.</p></div></div>
+        <div class="hallazgo"><span class="fig">${nf(M0.nAnom)}</span><div><b>ítems sintéticos atípicos para revisar</b><p>La alerta prioriza una revisión humana; no demuestra que exista un error.</p></div></div>
         <div class="hallazgo"><span class="fig">${fmtP(M0.K12)}</span><div><b>del valor lo prestan vehículos de terceros</b><p>Un dato para negociar con terceros y planear la flota propia.</p></div></div>
       </div>
       <div class="grid2">
         <div class="box" id="cierre-decisiones"><h3>Dos decisiones</h3><ol class="qlist">
-          <li><span class="n">01</span><span>Intervenir la etapa de aprobación para acortar el ciclo de cobro.</span></li>
-          <li><span class="n">02</span><span>Revisar los atípicos antes de facturar, no después.</span></li></ol></div>
+          <li><span class="n">01</span><span>Revisar la transición de aprobación con las personas responsables antes de proponer cambios.</span></li>
+          <li><span class="n">02</span><span>Validar manualmente las alertas atípicas antes de interpretar o ajustar un registro.</span></li></ol></div>
         <div class="box alt"><h3>Tres limitaciones, documentadas</h3><ol class="qlist">
-          <li><span class="n">01</span><span>Los datos son sintéticos y calibrados, no reales.</span></li>
+          <li><span class="n">01</span><span>Los datos son sintéticos y no representan una organización real.</span></li>
           <li><span class="n">02</span><span>El alcance se cerró en seis preguntas.</span></li>
           <li><span class="n">03</span><span>El pipeline se ejecuta bajo demanda, no programado.</span></li></ol></div>
       </div>
@@ -948,7 +948,7 @@
     irEscena(Math.max(0, Math.min(window.ESCENAS.length - 1, (+q.get('escena') || 1) - 1)));
   }).catch((err) => {
     stage.innerHTML = `<div class="error"><b>No se pudieron leer los datos</b> (${esc(err.message)}).<br><br>
-      La app lee los CSV de <code>JulianLopez_Dashboard_Proyecto/00_DATOS/</code>, así que hay que servirla desde la raíz del repositorio:<br><br>
+      El sitio publicado carga los CSV desde <code>guion/datos/</code>. Para ejecutar la app desde el repositorio local, sírvala desde su raíz:<br><br>
       <code>python3 -m http.server 8765</code><br>y abrir <code>http://localhost:8765/plan/guion/</code></div>`;
   });
 })();

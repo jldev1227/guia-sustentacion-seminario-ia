@@ -12,12 +12,12 @@ window.ESCENAS = [
     foco: '#portada-titulo',
     decir: (m) => [
       'Buenos días. Mi proyecto es un <b>tablero de control sobre la liquidación de servicios de transporte especial de personal</b>: el proceso con el que una empresa de transporte convierte los servicios de un mes —viajes, horas, kilómetros, pernoctes— en una liquidación que se aprueba y se factura a la operadora.',
-      'Lo elegí porque conozco el proceso por dentro. Y lo digo desde ya: <b>los datos son sintéticos</b>, calibrados sobre el proceso real, porque los reales tienen clientes, tarifas y personas que no se pueden exponer.'
+      'El caso representa de forma académica las etapas de liquidación y facturación. <b>Los datos son sintéticos</b> y se generaron para practicar validaciones; no representan una operación ni una empresa real.'
     ],
-    hacer: ['Mostrar la portada.', 'Señalar la etiqueta «Datos sintéticos calibrados».'],
+    hacer: ['Mostrar la portada.', 'Señalar la etiqueta «Datos sintéticos · escenario académico».'],
     pregunta: {
       q: '¿Por qué no usaste datos reales?',
-      a: 'Porque cruzan confidencialidad comercial y la Ley 1581 de 2012. La estructura, las reglas de cálculo y las proporciones son las del proceso real; los registros individuales se generaron.'
+      a: 'El alcance de esta entrega es académico: el conjunto fue generado para ensayar las reglas y los cálculos. No se afirma que su estructura, proporciones o resultados correspondan a un proceso empresarial observado.'
     }
   },
   {
@@ -41,18 +41,18 @@ window.ESCENAS = [
   {
     id: 'sucios',
     kicker: 'Escena 3 · Los datos',
-    titulo: 'Llegan sucios, como en la vida real',
+    titulo: 'Defectos introducidos para el ejercicio',
     seg: 50,
     stage: 'pipeline',
     foco: '#sucio',
     decir: (m) => [
-      'Los datos llegan como llegarían de verdad: sucios. Son <b>{raw} líneas de servicio</b> con placas escritas de varias formas, tarifas guardadas como texto con signo de pesos, fechas en dos formatos, registros duplicados y líneas que apuntan a liquidaciones que no existen.',
+      'Los archivos de práctica contienen <b>{raw} líneas sintéticas</b> con variaciones deliberadas: placas, tarifas como texto, fechas en varios formatos, duplicados y referencias sin cabecera.',
       'La suciedad es deliberada: <b>limpiarla es la mitad del trabajo técnico</b>, y es lo que el pipeline tiene que resolver.'
     ],
-    hacer: ['Señalar una placa en minúscula, una tarifa con «$» y una fecha dd/mm/aaaa.'],
+    hacer: ['Mostrar ejemplos generados en los archivos y las reglas que los detectan.'],
     pregunta: {
-      q: '¿Cómo sabes que la suciedad se parece a la real?',
-      a: 'Porque son los errores que aparecen en la operación: la misma operadora escrita de ocho formas, placas sin guion, montos copiados desde una hoja de cálculo.'
+      q: '¿Cómo sabes que esos defectos se parecen a los de una operación real?',
+      a: 'No afirmo que las distribuciones o tasas de defectos representen una operación real. Los casos se incluyeron para demostrar las validaciones; contrastarlos requeriría datos autorizados y revisión con responsables del proceso.'
     }
   },
   {
@@ -163,7 +163,7 @@ window.ESCENAS = [
     hacer: ['Clic en «¿Cómo se marca?» para mostrar la caja con los límites.'],
     pregunta: {
       q: '¿Eso es inteligencia artificial?',
-      a: 'Es un método estadístico de detección de anomalías, que es la base de muchos sistemas de IA. Lo elegí porque es explicable; un modelo más complejo no cambiaría la decisión y sería más difícil de justificar.'
+      a: 'El ejercicio aplica una regla estadística para marcar valores alejados del intervalo central. La alerta prioriza revisión humana; no demuestra que exista un error ni recomienda un ajuste comercial.'
     }
   },
   {
@@ -177,7 +177,7 @@ window.ESCENAS = [
     foco: '#p3-etapas',
     decir: (m) => [
       'Tercera página: tiempos. Este es <b>el hallazgo principal</b>.',
-      'De los {diasFact} días que tarda una liquidación, <b>{diasAprob} se van en una sola etapa</b>: esperando la aprobación. Es el cuello de botella, y lo resalto en ocre.',
+      'En el conjunto sintético, <b>{diasAprob} de los {diasFact} días promedio corresponden a la espera de aprobación</b>. Es la transición con mayor promedio en este ejercicio; no mide tiempos de una empresa.',
       'La línea de abajo muestra el ciclo mes a mes contra una referencia de quince días: <b>{mesesSobre} de {nMeses} meses</b> quedan por encima.'
     ],
     hacer: ['Señalar la barra ocre «LIQUIDADA → APROBADA».', 'Señalar la línea de referencia de 15 días.'],
@@ -194,7 +194,7 @@ window.ESCENAS = [
     stage: 'cierre',
     foco: '#cierre-decisiones',
     decir: () => [
-      'Para cerrar: el tablero cambia <b>dos decisiones</b>. Saber dónde se detienen las liquidaciones permite intervenir en la aprobación y cobrar antes. Y revisar los atípicos antes de facturar evita corregir facturas ya emitidas.',
+      'Para cerrar: el tablero organiza <b>dos líneas de revisión</b> en los datos sintéticos: observar las transiciones entre estados y priorizar registros atípicos. No estima ahorros ni prescribe ajustes comerciales. Cualquier cambio requeriría validación con datos autorizados y responsables del proceso.',
       'Tiene tres limitaciones, y están documentadas: <b>datos sintéticos, un alcance cerrado en seis preguntas y un pipeline que se ejecuta bajo demanda</b>. Gracias.'
     ],
     hacer: ['Dejar esta pantalla quieta mientras llegan las preguntas.'],
