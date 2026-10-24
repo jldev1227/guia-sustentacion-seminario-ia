@@ -123,7 +123,7 @@
   }
 
   async function loadScriptValues() {
-    const paths = ['../guion/datos/', '../../JulianLopez_Dashboard_Proyecto/00_DATOS/'];
+    const paths = ['../guion/datos/', '../../Proyecto_Tecnico_Seminario_IA/00_DATOS/'];
     const files = ['limpio/liquidaciones.csv', 'limpio/items.csv', 'limpio/tiempos_proceso.csv', 'raw/liquidaciones_items.csv'];
     let base = null;
     for (const candidate of paths) {

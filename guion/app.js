@@ -6,7 +6,7 @@
 
   // En el repo los CSV viven en el proyecto; en la versión publicada (github.io)
   // la Action los copia a guion/datos/. Se prueba la primera ruta que responda.
-  const RUTAS = ['../../JulianLopez_Dashboard_Proyecto/00_DATOS/', 'datos/'];
+  const RUTAS = ['../../Proyecto_Tecnico_Seminario_IA/00_DATOS/', 'datos/'];
   let RUTA = RUTAS[0];
   const C = { tinta: '#13302D', verde: '#2C6A4F', ocre: '#A85F22', suave: '#8FB5A6', alerta: '#A3382E' };
   const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
