@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#13302D">
+  <title>Teleprompter · Opción de grado</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Zilla+Slab:wght@500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#reader">Ir al texto del guion</a>
+  <div class="app" id="app">
+    <header class="topbar">
+      <a class="brand" href="../guion/" aria-label="Volver al simulador de sustentación">
+        <span class="brand-mark">G</span>
+        <span><b>Seminario IA</b><small>Opción de grado · 2026-2</small></span>
+      </a>
+      <div class="session-picker">
+        <label for="script-select">Guion</label>
+        <select id="script-select">
+          <option value="tutorial">Video tutorial · 5 min</option>
+          <option value="presentacion">Presentación · meta 9 min</option>
+        </select>
+      </div>
+      <a class="back-link" href="../guion/">Simulador ↗</a>
+    </header>
+
+    <section class="control-deck" aria-label="Controles del teleprompter">
+      <div class="timer-card" id="timer-card">
+        <div class="timer-row">
+          <div>
+            <span class="eyebrow">Tiempo transcurrido</span>
+            <output class="timer" id="timer" role="timer" aria-label="Tiempo transcurrido">0:00</output>
+          </div>
+          <div class="timer-target" id="timer-target">Meta 5:00</div>
+        </div>
+        <div class="timer-track" aria-hidden="true"><span id="timer-progress"></span></div>
+        <div class="remaining" id="remaining">Quedan 5:00</div>
+      </div>
+
+      <div class="controls-main">
+        <div class="play-controls">
+          <button class="button button-primary" id="play-button" type="button" title="Iniciar o pausar (espacio)">
+            <span aria-hidden="true" id="play-icon">▶</span><span id="play-label">Iniciar lectura</span>
+          </button>
+          <button class="button button-quiet" id="reset-button" type="button" title="Reiniciar cronómetro y posición">Reiniciar</button>
+        </div>
+        <div class="adjustments">
+          <label class="range-control" for="speed-range">
+            <span>Desplazamiento <output id="speed-output">16 px/s</output></span>
+            <input id="speed-range" type="range" min="4" max="48" step="1" value="16">
+          </label>
+          <div class="reading-controls">
+            <div class="font-control" aria-label="Tamaño del texto">
+              <button class="button button-small" id="font-down" type="button" title="Reducir tamaño de texto">A−</button>
+              <span id="font-output" aria-live="polite">42 px</span>
+              <button class="button button-small" id="font-up" type="button" title="Aumentar tamaño de texto">A+</button>
+            </div>
+            <button class="button button-small" id="mirror-button" type="button" aria-pressed="false" title="Voltear el texto para leerlo en un espejo">Espejo</button>
+            <button class="button button-small" id="fullscreen-button" type="button" title="Abrir pantalla completa (F)">Pantalla completa</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="extra-controls">
+        <button class="button button-small" id="autoscroll-button" type="button" aria-pressed="true" title="Activar o desactivar desplazamiento automático">Auto scroll: sí</button>
+        <button class="button button-small" id="cues-button" type="button" aria-pressed="false">Mostrar apoyos</button>
+        <details class="shortcuts">
+          <summary>Atajos</summary>
+          <div class="shortcut-popover">
+            <p><kbd>Espacio</kbd> iniciar o pausar</p>
+            <p><kbd>←</kbd> <kbd>→</kbd> capítulo anterior o siguiente</p>
+            <p><kbd>F</kbd> pantalla completa · <kbd>M</kbd> espejo</p>
+            <p><kbd>+</kbd> <kbd>−</kbd> tamaño de letra</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="reading-status" aria-label="Progreso del guion">
+      <div class="status-line">
+        <span id="active-chapter" aria-live="polite">Preparando el guion…</span>
+        <label class="chapter-picker" for="chapter-select">Ir a
+          <select id="chapter-select" aria-label="Ir a un capítulo"></select>
+        </label>
+        <span class="scroll-progress-label" id="scroll-progress-label">0% leído</span>
+      </div>
+      <div class="scroll-track" aria-hidden="true"><span id="scroll-progress"></span></div>
+    </section>
+
+    <main class="reader" id="reader" tabindex="0" aria-label="Texto del teleprompter">
+      <div class="reader-inner" id="script-content"></div>
+    </main>
+    <footer class="footer-note">
+      <span>Datos sintéticos calibrados · el guion sirve como apoyo para la grabación y la exposición.</span>
+      <a href="../guion/">Volver al simulador de sustentación</a>
+    </footer>
+  </div>
+
+  <script src="../guion/guion.js"></script>
+  <script src="teleprompter.js"></script>
+</body>
+</html>

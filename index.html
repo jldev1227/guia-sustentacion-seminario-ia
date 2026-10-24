@@ -607,7 +607,7 @@
     .flow { grid-template-columns: minmax(0, 1fr); }
   }
 
-  .cta-row { margin: 22px 0 0; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; }
   .cta {
     display: inline-block;
     background: var(--ink-strong);
@@ -619,6 +619,8 @@
     border-radius: 4px;
   }
   .cta:hover { background: var(--accent-ink); color: #fff; }
+  .cta + .cta { background: var(--panel); color: var(--ink-strong); box-shadow: inset 0 0 0 1px var(--line-strong); }
+  .cta + .cta:hover { background: var(--ground); color: var(--ink-strong); }
 
   a { color: var(--accent-ink); }
 
@@ -699,11 +701,7 @@
         Caso académico con datos sintéticos y límites declarados. Autor: Camilo Cepeda Orduz ·
         Fundación de Educación Superior San José.
       </p>
-      <a class="download-cta" href="descargas/Entregables_Seminario_IA_Camilo_Cepeda_Orduz_Actualizado_2026-10-22.zip" download>Descargar todos los entregables actualizados · ZIP</a>
-      <p class="cta-row">
-        <a class="cta" href="descargas/ENSAYO_Camilo_Cepeda_Orduz_APA.pdf" download>Ensayo APA 7 · PDF</a>
-        <a class="cta" href="descargas/ENSAYO_Camilo_Cepeda_Orduz_APA.docx" download>Ensayo editable · DOCX</a>
-      </p>
+      <a class="download-cta" href="descargas/Entregables_Seminario_IA_Camilo_Cepeda_Orduz.zip" download>Descargar todos los entregables · ZIP</a>
       <dl class="docblock">
         <div><dt>Período</dt><dd>2026-2</dd></div>
         <div><dt>Ventana</dt><dd>16 – 27 OCT</dd></div>
@@ -711,7 +709,7 @@
         <div><dt>Modalidad</dt><dd>Individual</dd></div>
         <div><dt>Estado</dt><dd>Paquete preparado</dd></div>
       </dl>
-      <p class="cta-row"><a class="cta" href="guion/">Abrir el guion interactivo de 10 minutos →</a></p>
+      <p class="cta-row"><a class="cta" href="teleprompter/">Abrir teleprompter · video y presentación →</a><a class="cta" href="guion/">Abrir simulador del tablero</a></p>
     </header>
 
     <!-- ─────────────────────────────────────────────────── -->

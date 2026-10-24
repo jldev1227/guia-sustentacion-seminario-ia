@@ -91,17 +91,8 @@ code { font-family: var(--mono); font-size: 0.9em; }
   font-size: 12px;
   white-space: nowrap;
 }
-.topbar .top-download {
-  color: #E7EEEB;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.08);
-  padding: 6px 10px;
-  border-radius: 4px;
-  font-size: 12px;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.topbar .top-download:hover { background: rgba(255,255,255,0.15); }
+.topbar .prompter-link { color: #E7EEEB; font-size: 12px; text-decoration: none; white-space: nowrap; }
+.topbar .prompter-link:hover { color: #fff; text-decoration: underline; }
 
 .body {
   display: grid;
@@ -433,8 +424,8 @@ svg.chart .click:hover { fill: rgba(168,95,34,0.10); }
   .topbar { gap: 8px; padding: 0 10px; height: 48px; }
   .brand { display: none; }
   .tabs button { padding: 7px 9px; font-size: 12.5px; }
-  .topbar .top-download { padding: 6px 8px; font-size: 11.5px; }
   .topbar .toggle { padding: 6px 9px; font-size: 11.5px; }
+  .topbar .prompter-link { font-size: 11px; }
   .stage { padding: 12px; }
   .body { grid-template-rows: minmax(0, 1fr) 48%; }
   .g-head { padding: 10px 14px 10px; }
